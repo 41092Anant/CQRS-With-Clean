@@ -1,0 +1,11 @@
+using MediatR;
+
+namespace CommonArchitecture.Application.Commands.Products.UpdateProduct;
+
+public record UpdateProductCommand(
+    int Id,
+    string Name,
+    string Description,
+    decimal Price,
+    int Stock
+) : IRequest<bool>;

@@ -4,6 +4,7 @@ using CommonArchitecture.Core.Interfaces;
 
 namespace CommonArchitecture.Application.Services;
 
+[Obsolete("Use CQRS Commands and Queries instead. This service is kept for reference only.")]
 public class ProductService
 {
     private readonly IProductRepository _productRepository;

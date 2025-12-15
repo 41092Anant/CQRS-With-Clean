@@ -141,3 +141,16 @@ D:\My Archi\Core\src\CommonArchitecture.Web\obj\Debug\net9.0\refint\CommonArchit
 D:\My Archi\Core\src\CommonArchitecture.Web\obj\Debug\net9.0\CommonArchitecture.Web.pdb
 D:\My Archi\Core\src\CommonArchitecture.Web\obj\Debug\net9.0\CommonArchitecture.Web.genruntimeconfig.cache
 D:\My Archi\Core\src\CommonArchitecture.Web\obj\Debug\net9.0\ref\CommonArchitecture.Web.dll
+D:\My Archi\Core\src\CommonArchitecture.Web\bin\Debug\net9.0\MediatR.dll
+D:\My Archi\Core\src\CommonArchitecture.Web\bin\Debug\net9.0\MediatR.Contracts.dll
+D:\My Archi\Core\src\CommonArchitecture.Web\bin\Debug\net9.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+D:\My Archi\Core\src\CommonArchitecture.Web\bin\Debug\net9.0\Microsoft.Extensions.Logging.Abstractions.dll
+D:\My Archi\Core\src\CommonArchitecture.Web\bin\Debug\net9.0\System.Diagnostics.DiagnosticSource.dll
+D:\My Archi\Core\src\CommonArchitecture.Web\obj\Debug\net9.0\CommonArchitecture.Web.MvcApplicationPartsAssemblyInfo.cs
+D:\My Archi\Core\src\CommonArchitecture.Web\bin\Debug\net9.0\FluentValidation.dll
+D:\My Archi\Core\src\CommonArchitecture.Web\bin\Debug\net9.0\FluentValidation.AspNetCore.dll
+D:\My Archi\Core\src\CommonArchitecture.Web\bin\Debug\net9.0\FluentValidation.DependencyInjectionExtensions.dll
+D:\My Archi\Core\src\CommonArchitecture.Web\bin\Debug\net9.0\System.Linq.Dynamic.Core.dll
+D:\My Archi\Core\src\CommonArchitecture.Web\obj\Debug\net9.0\compressed\98bbbbtgwa-nes2p9da5r.gz
+D:\My Archi\Core\src\CommonArchitecture.Web\obj\Debug\net9.0\compressed\55wuccu9vp-jp07tlobi3.gz
+D:\My Archi\Core\src\CommonArchitecture.Web\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt

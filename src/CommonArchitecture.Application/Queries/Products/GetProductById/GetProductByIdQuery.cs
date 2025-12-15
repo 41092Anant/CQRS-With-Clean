@@ -1,0 +1,6 @@
+using CommonArchitecture.Application.DTOs;
+using MediatR;
+
+namespace CommonArchitecture.Application.Queries.Products.GetProductById;
+
+public record GetProductByIdQuery(int Id) : IRequest<ProductDto?>;

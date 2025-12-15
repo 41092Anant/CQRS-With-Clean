@@ -2,12 +2,23 @@ using CommonArchitecture.Core.Entities;
 using CommonArchitecture.Core.Interfaces;
 using CommonArchitecture.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Dynamic.Core;
 
 namespace CommonArchitecture.Infrastructure.Repositories;
 
 public class ProductRepository : IProductRepository
 {
     private readonly ApplicationDbContext _context;
+
+    // Whitelist of allowed sort fields to prevent injection attacks
+    private static readonly HashSet<string> AllowedSortFields = new(StringComparer.OrdinalIgnoreCase)
+    {
+        nameof(Product.Id),
+        nameof(Product.Name),
+        nameof(Product.Price),
+        nameof(Product.Stock),
+        nameof(Product.CreatedAt)
+    };
 
     public ProductRepository(ApplicationDbContext context)
     {
@@ -45,5 +56,89 @@ public class ProductRepository : IProductRepository
             _context.Products.Remove(product);
             await _context.SaveChangesAsync();
         }
+    }
+
+    /// <summary>
+    /// Retrieves a paginated list of products with optional search and sorting.
+    /// </summary>
+    /// <param name="searchTerm">Optional search term to filter by name or description</param>
+    /// <param name="sortBy">Field name to sort by (Id, Name, Price, Stock, CreatedAt)</param>
+    /// <param name="sortOrder">Sort order: "asc" or "desc"</param>
+    /// <param name="pageNumber">Page number (1-based)</param>
+    /// <param name="pageSize">Number of items per page</param>
+    /// <returns>Paginated list of products</returns>
+    public async Task<IEnumerable<Product>> GetPagedAsync(string? searchTerm, string sortBy, string sortOrder, int pageNumber, int pageSize)
+    {
+        var query = _context.Products.AsQueryable();
+
+        // Apply search filter
+        query = ApplySearchFilter(query, searchTerm);
+
+        // Apply dynamic sorting using System.Linq.Dynamic.Core
+        query = ApplySorting(query, sortBy, sortOrder);
+
+        // Apply pagination
+        var products = await query
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+
+        return products;
+    }
+
+    public async Task<int> GetTotalCountAsync(string? searchTerm)
+    {
+        var query = _context.Products.AsQueryable();
+
+        // Apply search filter
+        query = ApplySearchFilter(query, searchTerm);
+
+        return await query.CountAsync();
+    }
+
+    /// <summary>
+    /// Applies search filter to the query.
+    /// Uses database collation (CI_AS in SQL Server) for case-insensitive search.
+    /// This allows proper index usage instead of forcing LOWER() which prevents index usage.
+    /// </summary>
+    private static IQueryable<Product> ApplySearchFilter(IQueryable<Product> query, string? searchTerm)
+    {
+        if (!string.IsNullOrWhiteSpace(searchTerm))
+        {
+            // Rely on database collation (CI_AS in SQL Server) for case-insensitive search
+            // This allows proper index usage instead of forcing LOWER() which prevents index usage
+            query = query.Where(p => 
+                p.Name.Contains(searchTerm) || 
+                p.Description.Contains(searchTerm));
+        }
+
+        return query;
+    }
+
+    /// <summary>
+    /// Applies dynamic sorting to the query using System.Linq.Dynamic.Core.
+    /// Validates sort field against whitelist to prevent injection attacks.
+    /// </summary>
+    /// <param name="query">The query to sort</param>
+    /// <param name="sortBy">Field name to sort by</param>
+    /// <param name="sortOrder">Sort order: "asc" or "desc"</param>
+    /// <returns>Sorted query</returns>
+    private static IQueryable<Product> ApplySorting(IQueryable<Product> query, string sortBy, string sortOrder)
+    {
+        // Validate and sanitize sort field
+        if (string.IsNullOrWhiteSpace(sortBy) || !AllowedSortFields.Contains(sortBy))
+        {
+            // Default to Id if invalid field
+            sortBy = nameof(Product.Id);
+        }
+
+        // Validate sort order
+        var isDescending = sortOrder?.Equals("desc", StringComparison.OrdinalIgnoreCase) ?? false;
+
+        // Build dynamic OrderBy expression
+        // System.Linq.Dynamic.Core allows us to use string-based ordering
+        var orderByExpression = $"{sortBy} {(isDescending ? "descending" : "ascending")}";
+        
+        return query.OrderBy(orderByExpression);
     }
 }

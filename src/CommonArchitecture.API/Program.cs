@@ -3,6 +3,7 @@ using CommonArchitecture.Core.Interfaces;
 using CommonArchitecture.Infrastructure.Persistence;
 using CommonArchitecture.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,10 +14,14 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // Register repositories
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
-// Register services
-builder.Services.AddScoped<ProductService>();
+// Register MediatR for CQRS pattern
+builder.Services.AddMediatR(cfg => 
+    cfg.RegisterServicesFromAssembly(typeof(CommonArchitecture.Application.Commands.Products.CreateProduct.CreateProductCommand).Assembly));
 
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+// Add Controllers
+builder.Services.AddControllers();
+
+// Add OpenAPI
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
@@ -25,9 +30,12 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.MapScalarApiReference();
 }
 
 app.UseHttpsRedirection();
+
+app.MapControllers();
 
 var summaries = new[]
 {
