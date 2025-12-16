@@ -1,0 +1,7 @@
+using CommonArchitecture.Application.DTOs;
+using MediatR;
+
+namespace CommonArchitecture.Application.Queries.Users.GetAllUsers;
+
+public record GetAllUsersQuery(UserQueryParameters Parameters) : IRequest<PaginatedResult<UserDto>>;
+

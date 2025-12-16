@@ -1,0 +1,7 @@
+using CommonArchitecture.Application.DTOs;
+using MediatR;
+
+namespace CommonArchitecture.Application.Queries.Users.GetUserById;
+
+public record GetUserByIdQuery(int Id) : IRequest<UserDto?>;
+

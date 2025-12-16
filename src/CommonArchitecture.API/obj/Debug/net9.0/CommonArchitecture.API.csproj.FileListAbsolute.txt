@@ -1,11 +1,3 @@
-D:\My Archi\Core\src\CommonArchitecture.API\obj\Debug\net9.0\CommonArchitecture.API.csproj.AssemblyReference.cache
-D:\My Archi\Core\src\CommonArchitecture.API\obj\Debug\net9.0\rpswa.dswa.cache.json
-D:\My Archi\Core\src\CommonArchitecture.API\obj\Debug\net9.0\CommonArchitecture.API.GeneratedMSBuildEditorConfig.editorconfig
-D:\My Archi\Core\src\CommonArchitecture.API\obj\Debug\net9.0\CommonArchitecture.API.AssemblyInfoInputs.cache
-D:\My Archi\Core\src\CommonArchitecture.API\obj\Debug\net9.0\CommonArchitecture.API.AssemblyInfo.cs
-D:\My Archi\Core\src\CommonArchitecture.API\obj\Debug\net9.0\CommonArchitecture.API.csproj.CoreCompileInputs.cache
-D:\My Archi\Core\src\CommonArchitecture.API\obj\Debug\net9.0\CommonArchitecture.API.MvcApplicationPartsAssemblyInfo.cs
-D:\My Archi\Core\src\CommonArchitecture.API\obj\Debug\net9.0\CommonArchitecture.API.MvcApplicationPartsAssemblyInfo.cache
 D:\My Archi\Core\src\CommonArchitecture.API\bin\Debug\net9.0\appsettings.Development.json
 D:\My Archi\Core\src\CommonArchitecture.API\bin\Debug\net9.0\appsettings.json
 D:\My Archi\Core\src\CommonArchitecture.API\bin\Debug\net9.0\CommonArchitecture.API.staticwebassets.endpoints.json
@@ -61,6 +53,7 @@ D:\My Archi\Core\src\CommonArchitecture.API\bin\Debug\net9.0\System.Configuratio
 D:\My Archi\Core\src\CommonArchitecture.API\bin\Debug\net9.0\System.Diagnostics.DiagnosticSource.dll
 D:\My Archi\Core\src\CommonArchitecture.API\bin\Debug\net9.0\System.Drawing.Common.dll
 D:\My Archi\Core\src\CommonArchitecture.API\bin\Debug\net9.0\System.IdentityModel.Tokens.Jwt.dll
+D:\My Archi\Core\src\CommonArchitecture.API\bin\Debug\net9.0\System.Linq.Dynamic.Core.dll
 D:\My Archi\Core\src\CommonArchitecture.API\bin\Debug\net9.0\System.Memory.Data.dll
 D:\My Archi\Core\src\CommonArchitecture.API\bin\Debug\net9.0\System.Runtime.Caching.dll
 D:\My Archi\Core\src\CommonArchitecture.API\bin\Debug\net9.0\System.Security.Cryptography.ProtectedData.dll
@@ -149,6 +142,15 @@ D:\My Archi\Core\src\CommonArchitecture.API\bin\Debug\net9.0\CommonArchitecture.
 D:\My Archi\Core\src\CommonArchitecture.API\bin\Debug\net9.0\CommonArchitecture.Application.pdb
 D:\My Archi\Core\src\CommonArchitecture.API\bin\Debug\net9.0\CommonArchitecture.Infrastructure.pdb
 D:\My Archi\Core\src\CommonArchitecture.API\bin\Debug\net9.0\CommonArchitecture.Core.pdb
+D:\My Archi\Core\src\CommonArchitecture.API\obj\Debug\net9.0\CommonArchitecture.API.csproj.AssemblyReference.cache
+D:\My Archi\Core\src\CommonArchitecture.API\obj\Debug\net9.0\rpswa.dswa.cache.json
+D:\My Archi\Core\src\CommonArchitecture.API\obj\Debug\net9.0\CommonArchitecture.API.GeneratedMSBuildEditorConfig.editorconfig
+D:\My Archi\Core\src\CommonArchitecture.API\obj\Debug\net9.0\CommonArchitecture.API.AssemblyInfoInputs.cache
+D:\My Archi\Core\src\CommonArchitecture.API\obj\Debug\net9.0\CommonArchitecture.API.AssemblyInfo.cs
+D:\My Archi\Core\src\CommonArchitecture.API\obj\Debug\net9.0\CommonArchitecture.API.csproj.CoreCompileInputs.cache
+D:\My Archi\Core\src\CommonArchitecture.API\obj\Debug\net9.0\CommonArchitecture.API.MvcApplicationPartsAssemblyInfo.cs
+D:\My Archi\Core\src\CommonArchitecture.API\obj\Debug\net9.0\CommonArchitecture.API.MvcApplicationPartsAssemblyInfo.cache
+D:\My Archi\Core\src\CommonArchitecture.API\obj\Debug\net9.0\CommonArchitecture.API.sourcelink.json
 D:\My Archi\Core\src\CommonArchitecture.API\obj\Debug\net9.0\rjimswa.dswa.cache.json
 D:\My Archi\Core\src\CommonArchitecture.API\obj\Debug\net9.0\rjsmrazor.dswa.cache.json
 D:\My Archi\Core\src\CommonArchitecture.API\obj\Debug\net9.0\rjsmcshtml.dswa.cache.json
@@ -163,5 +165,5 @@ D:\My Archi\Core\src\CommonArchitecture.API\obj\Debug\net9.0\refint\CommonArchit
 D:\My Archi\Core\src\CommonArchitecture.API\obj\Debug\net9.0\CommonArchitecture.API.pdb
 D:\My Archi\Core\src\CommonArchitecture.API\obj\Debug\net9.0\CommonArchitecture.API.genruntimeconfig.cache
 D:\My Archi\Core\src\CommonArchitecture.API\obj\Debug\net9.0\ref\CommonArchitecture.API.dll
-D:\My Archi\Core\src\CommonArchitecture.API\bin\Debug\net9.0\System.Linq.Dynamic.Core.dll
 D:\My Archi\Core\src\CommonArchitecture.API\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
+D:\My Archi\Core\src\CommonArchitecture.API\bin\Debug\net9.0\CommonArchitecture.API.staticwebassets.runtime.json

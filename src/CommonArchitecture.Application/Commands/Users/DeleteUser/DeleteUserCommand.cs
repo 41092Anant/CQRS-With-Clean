@@ -1,0 +1,6 @@
+using MediatR;
+
+namespace CommonArchitecture.Application.Commands.Users.DeleteUser;
+
+public record DeleteUserCommand(int Id) : IRequest<bool>;
+

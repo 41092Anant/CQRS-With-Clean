@@ -1,0 +1,7 @@
+using CommonArchitecture.Application.DTOs;
+using MediatR;
+
+namespace CommonArchitecture.Application.Queries.Roles.GetRoleById;
+
+public record GetRoleByIdQuery(int Id) : IRequest<RoleDto?>;
+

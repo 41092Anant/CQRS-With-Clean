@@ -8,6 +8,7 @@ D:\My Archi\Core\src\CommonArchitecture.Application\obj\Debug\net9.0\CommonArchi
 D:\My Archi\Core\src\CommonArchitecture.Application\obj\Debug\net9.0\CommonArchitecture.Application.AssemblyInfoInputs.cache
 D:\My Archi\Core\src\CommonArchitecture.Application\obj\Debug\net9.0\CommonArchitecture.Application.AssemblyInfo.cs
 D:\My Archi\Core\src\CommonArchitecture.Application\obj\Debug\net9.0\CommonArchitecture.Application.csproj.CoreCompileInputs.cache
+D:\My Archi\Core\src\CommonArchitecture.Application\obj\Debug\net9.0\CommonArchitecture.Application.sourcelink.json
 D:\My Archi\Core\src\CommonArchitecture.Application\obj\Debug\net9.0\CommonAr.65A33C85.Up2Date
 D:\My Archi\Core\src\CommonArchitecture.Application\obj\Debug\net9.0\CommonArchitecture.Application.dll
 D:\My Archi\Core\src\CommonArchitecture.Application\obj\Debug\net9.0\refint\CommonArchitecture.Application.dll

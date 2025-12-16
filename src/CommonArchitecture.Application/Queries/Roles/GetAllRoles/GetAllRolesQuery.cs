@@ -1,0 +1,7 @@
+using CommonArchitecture.Application.DTOs;
+using MediatR;
+
+namespace CommonArchitecture.Application.Queries.Roles.GetAllRoles;
+
+public record GetAllRolesQuery(RoleQueryParameters Parameters) : IRequest<PaginatedResult<RoleDto>>;
+

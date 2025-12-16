@@ -1,3 +1,5 @@
+C:\Users\Admin\.nuget\packages\ntoastnotify\8.0.0\contentFiles\any\net6.0\wwwroot\noty.js
+C:\Users\Admin\.nuget\packages\ntoastnotify\8.0.0\contentFiles\any\net6.0\wwwroot\toastr.js
 D:\My Archi\Core\src\CommonArchitecture.Web\wwwroot\lib\jquery-validation\dist\additional-methods.min.js
 D:\My Archi\Core\src\CommonArchitecture.Web\wwwroot\lib\bootstrap\dist\css\bootstrap.css
 D:\My Archi\Core\src\CommonArchitecture.Web\wwwroot\lib\jquery-validation-unobtrusive\dist\jquery.validate.unobtrusive.min.js
@@ -7,6 +9,7 @@ D:\My Archi\Core\src\CommonArchitecture.Web\wwwroot\lib\bootstrap\dist\css\boots
 D:\My Archi\Core\src\CommonArchitecture.Web\wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.css.map
 D:\My Archi\Core\src\CommonArchitecture.Web\wwwroot\lib\bootstrap\dist\js\bootstrap.min.js
 D:\My Archi\Core\src\CommonArchitecture.Web\wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.min.css.map
+D:\My Archi\Core\src\CommonArchitecture.Web\wwwroot\js\roles.js
 D:\My Archi\Core\src\CommonArchitecture.Web\wwwroot\lib\jquery-validation\LICENSE.md
 D:\My Archi\Core\src\CommonArchitecture.Web\wwwroot\lib\jquery-validation-unobtrusive\LICENSE.txt
 D:\My Archi\Core\src\CommonArchitecture.Web\wwwroot\js\products.js
@@ -29,6 +32,7 @@ D:\My Archi\Core\src\CommonArchitecture.Web\wwwroot\lib\bootstrap\dist\css\boots
 D:\My Archi\Core\src\CommonArchitecture.Web\wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.css
 D:\My Archi\Core\src\CommonArchitecture.Web\wwwroot\lib\bootstrap\dist\css\bootstrap.css.map
 D:\My Archi\Core\src\CommonArchitecture.Web\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.min.css.map
+D:\My Archi\Core\src\CommonArchitecture.Web\wwwroot\js\users.js
 D:\My Archi\Core\src\CommonArchitecture.Web\wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.min.css
 D:\My Archi\Core\src\CommonArchitecture.Web\wwwroot\lib\jquery\dist\jquery.min.map
 D:\My Archi\Core\src\CommonArchitecture.Web\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map
@@ -66,7 +70,9 @@ wwwroot\css\products.css
 wwwroot\css\site.css
 wwwroot\favicon.ico
 wwwroot\js\products.js
+wwwroot\js\roles.js
 wwwroot\js\site.js
+wwwroot\js\users.js
 wwwroot\lib\bootstrap\dist\css\bootstrap.css
 wwwroot\lib\bootstrap\dist\css\bootstrap.css.map
 wwwroot\lib\bootstrap\dist\css\bootstrap.min.css

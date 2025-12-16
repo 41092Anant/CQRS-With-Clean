@@ -1,0 +1,6 @@
+using MediatR;
+
+namespace CommonArchitecture.Application.Commands.Roles.DeleteRole;
+
+public record DeleteRoleCommand(int Id) : IRequest<bool>;
+

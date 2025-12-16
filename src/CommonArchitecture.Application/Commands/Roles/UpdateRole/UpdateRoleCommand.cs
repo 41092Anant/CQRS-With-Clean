@@ -1,0 +1,9 @@
+using MediatR;
+
+namespace CommonArchitecture.Application.Commands.Roles.UpdateRole;
+
+public record UpdateRoleCommand(
+    int Id,
+    string RoleName
+) : IRequest<bool>;
+

@@ -1,6 +1,7 @@
 using CommonArchitecture.Infrastructure.Persistence;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using NToastNotify;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,10 +16,31 @@ builder.Services.AddHttpClient<CommonArchitecture.Web.Services.IProductApiServic
     client.DefaultRequestHeaders.Add("Accept", "application/json");
 });
 
+builder.Services.AddHttpClient<CommonArchitecture.Web.Services.IRoleApiService, CommonArchitecture.Web.Services.RoleApiService>(client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["ApiSettings:BaseUrl"] ?? "http://localhost:5089");
+    client.DefaultRequestHeaders.Add("Accept", "application/json");
+});
+
+builder.Services.AddHttpClient<CommonArchitecture.Web.Services.IUserApiService, CommonArchitecture.Web.Services.UserApiService>(client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["ApiSettings:BaseUrl"] ?? "http://localhost:5089");
+    client.DefaultRequestHeaders.Add("Accept", "application/json");
+});
+
 // Register FluentValidation
 builder.Services.AddValidatorsFromAssemblyContaining<CommonArchitecture.Web.Validators.CreateProductDtoValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<CommonArchitecture.Web.Validators.CreateRoleDtoValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<CommonArchitecture.Web.Validators.CreateUserDtoValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<CommonArchitecture.Web.Validators.CreateUserDtoValidator>();
 
-builder.Services.AddControllersWithViews();
+// Register NToastNotify with ControllersWithViews
+builder.Services.AddControllersWithViews().AddNToastNotifyNoty(new NotyOptions
+{
+    ProgressBar = true,
+    Timeout = 5000,
+    Theme = "metroui"
+});
 
 var app = builder.Build();
 
@@ -31,9 +53,14 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
+
 app.UseRouting();
 
 app.UseAuthorization();
+
+// Add NToastNotify middleware
+app.UseNToastNotify();
 
 app.MapStaticAssets();
 

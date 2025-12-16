@@ -1,0 +1,9 @@
+using CommonArchitecture.Application.DTOs;
+using MediatR;
+
+namespace CommonArchitecture.Application.Commands.Roles.CreateRole;
+
+public record CreateRoleCommand(
+    string RoleName
+) : IRequest<RoleDto>;
+

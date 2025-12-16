@@ -2,6 +2,7 @@ using CommonArchitecture.Application.DTOs;
 using CommonArchitecture.Web.Services;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using NToastNotify;
 
 namespace CommonArchitecture.Web.Controllers;
 
@@ -11,17 +12,20 @@ public class ProductsController : Controller
     private readonly ILogger<ProductsController> _logger;
     private readonly IValidator<CreateProductDto> _createValidator;
     private readonly IValidator<UpdateProductDto> _updateValidator;
+    private readonly IToastNotification _toastNotification;
 
     public ProductsController(
         IProductApiService productApiService, 
         ILogger<ProductsController> logger,
         IValidator<CreateProductDto> createValidator,
-        IValidator<UpdateProductDto> updateValidator)
+        IValidator<UpdateProductDto> updateValidator,
+        IToastNotification toastNotification)
     {
         _productApiService = productApiService;
         _logger = logger;
         _createValidator = createValidator;
         _updateValidator = updateValidator;
+        _toastNotification = toastNotification;
     }
 
     // GET: Products
@@ -82,17 +86,20 @@ public class ProductsController : Controller
                     g => g.Key,
                     g => g.Select(e => e.ErrorMessage).ToArray()
                 );
+            _toastNotification.AddErrorToastMessage("Please fix the validation errors before submitting.");
             return Json(new { success = false, errors = errors });
         }
 
         try
         {
             var product = await _productApiService.CreateAsync(createDto);
+            _toastNotification.AddSuccessToastMessage("Product created successfully!");
             return Json(new { success = true, message = "Product created successfully!", data = product });
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error creating product");
+            _toastNotification.AddErrorToastMessage("An error occurred while creating the product. Please try again.");
             return Json(new { success = false, message = "An error occurred while creating the product. Please try again." });
         }
     }
@@ -112,6 +119,7 @@ public class ProductsController : Controller
                     g => g.Key,
                     g => g.Select(e => e.ErrorMessage).ToArray()
                 );
+            _toastNotification.AddErrorToastMessage("Please fix the validation errors before submitting.");
             return Json(new { success = false, errors = errors });
         }
 
@@ -120,14 +128,17 @@ public class ProductsController : Controller
             var success = await _productApiService.UpdateAsync(id, updateDto);
             if (!success)
             {
+                _toastNotification.AddWarningToastMessage("Product not found");
                 return Json(new { success = false, message = "Product not found" });
             }
 
+            _toastNotification.AddSuccessToastMessage("Product updated successfully!");
             return Json(new { success = true, message = "Product updated successfully!" });
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error updating product {ProductId}", id);
+            _toastNotification.AddErrorToastMessage("An error occurred while updating the product. Please try again.");
             return Json(new { success = false, message = "An error occurred while updating the product. Please try again." });
         }
     }
@@ -142,14 +153,17 @@ public class ProductsController : Controller
             var success = await _productApiService.DeleteAsync(id);
             if (!success)
             {
+                _toastNotification.AddWarningToastMessage("Product not found");
                 return Json(new { success = false, message = "Product not found" });
             }
 
+            _toastNotification.AddSuccessToastMessage("Product deleted successfully!");
             return Json(new { success = true, message = "Product deleted successfully!" });
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error deleting product {ProductId}", id);
+            _toastNotification.AddErrorToastMessage("An error occurred while deleting the product. Please try again.");
             return Json(new { success = false, message = "An error occurred while deleting the product. Please try again." });
         }
     }
