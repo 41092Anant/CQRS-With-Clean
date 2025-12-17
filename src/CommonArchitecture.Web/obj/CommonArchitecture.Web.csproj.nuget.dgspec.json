@@ -289,6 +289,12 @@
               "target": "Package",
               "version": "[11.3.1, )"
             },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.0, )"
+            },
             "NToastNotify": {
               "target": "Package",
               "version": "[8.0.0, )"

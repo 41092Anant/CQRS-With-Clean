@@ -1,0 +1,171 @@
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="welcome-card">
+                <div class="welcome-content">
+                    <h2>Welcome to Admin Panel</h2>
+                    <p class="text-muted">Manage your products, users, and roles from this central dashboard.</p>
+                </div>
+                <div class="welcome-icon">
+                    <i class="bi bi-shield-lock-fill"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="row g-4 mb-4">
+        <div class="col-xl-3 col-lg-6 col-md-6">
+            <div class="stat-card stat-card-primary">
+                <div class="stat-card-body">
+                    <div class="stat-icon">
+                        <i class="bi bi-box-seam"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-value" id="productsCount">--</h3>
+                        <p class="stat-label">Total Products</p>
+                    </div>
+                </div>
+                <a asp-area="Admin" asp-controller="Products" asp-action="Index" class="stat-card-footer">
+                    <span>Manage Products</span>
+                    <i class="bi bi-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6">
+            <div class="stat-card stat-card-success">
+                <div class="stat-card-body">
+                    <div class="stat-icon">
+                        <i class="bi bi-people"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-value" id="usersCount">--</h3>
+                        <p class="stat-label">Total Users</p>
+                    </div>
+                </div>
+                <a asp-area="Admin" asp-controller="Users" asp-action="Index" class="stat-card-footer">
+                    <span>Manage Users</span>
+                    <i class="bi bi-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6">
+            <div class="stat-card stat-card-warning">
+                <div class="stat-card-body">
+                    <div class="stat-icon">
+                        <i class="bi bi-shield-check"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-value" id="rolesCount">--</h3>
+                        <p class="stat-label">Total Roles</p>
+                    </div>
+                </div>
+                <a asp-area="Admin" asp-controller="Roles" asp-action="Index" class="stat-card-footer">
+                    <span>Manage Roles</span>
+                    <i class="bi bi-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6">
+            <div class="stat-card stat-card-info">
+                <div class="stat-card-body">
+                    <div class="stat-icon">
+                        <i class="bi bi-shop"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-value">Live</h3>
+                        <p class="stat-label">Store Status</p>
+                    </div>
+                </div>
+                <a asp-area="Ecommerce" asp-controller="Shop" asp-action="Index" class="stat-card-footer">
+                    <span>View Store</span>
+                    <i class="bi bi-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0"><i class="bi bi-lightning"></i> Quick Actions</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <a asp-area="Admin" asp-controller="Products" asp-action="Index" class="quick-action-btn">
+                                <i class="bi bi-plus-circle"></i>
+                                <span>Add Product</span>
+                            </a>
+                        </div>
+                        <div class="col-md-4">
+                            <a asp-area="Admin" asp-controller="Users" asp-action="Index" class="quick-action-btn">
+                                <i class="bi bi-person-plus"></i>
+                                <span>Add User</span>
+                            </a>
+                        </div>
+                        <div class="col-md-4">
+                            <a asp-area="Admin" asp-controller="Roles" asp-action="Index" class="quick-action-btn">
+                                <i class="bi bi-shield-plus"></i>
+                                <span>Add Role</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0"><i class="bi bi-info-circle"></i> System Info</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled mb-0">
+                        <li class="d-flex justify-content-between py-2 border-bottom">
+                            <span class="text-muted">Application</span>
+                            <strong>Common Architecture</strong>
+                        </li>
+                        <li class="d-flex justify-content-between py-2 border-bottom">
+                            <span class="text-muted">Version</span>
+                            <strong>1.0.0</strong>
+                        </li>
+                        <li class="d-flex justify-content-between py-2">
+                            <span class="text-muted">Environment</span>
+                            <strong class="text-success">Development</strong>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Fetch stats
+            $.get('/Admin/Products/GetAll?PageSize=1', function(response) {
+                if (response.success && response.data) {
+                    $('#productsCount').text(response.data.totalCount || 0);
+                }
+            });
+            $.get('/Admin/Users/GetAll?PageSize=1', function(response) {
+                if (response.success && response.data) {
+                    $('#usersCount').text(response.data.totalCount || 0);
+                }
+            });
+            $.get('/Admin/Roles/GetAll?PageSize=1', function(response) {
+                if (response.success && response.data) {
+                    $('#rolesCount').text(response.data.totalCount || 0);
+                }
+            });
+        });
+    </script>
+}
+

@@ -28,10 +28,24 @@ builder.Services.AddHttpClient<CommonArchitecture.Web.Services.IUserApiService, 
     client.DefaultRequestHeaders.Add("Accept", "application/json");
 });
 
+builder.Services.AddHttpClient<CommonArchitecture.Web.Services.IAuthApiService, CommonArchitecture.Web.Services.AuthApiService>(client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["ApiSettings:BaseUrl"] ?? "http://localhost:5089");
+    client.DefaultRequestHeaders.Add("Accept", "application/json");
+});
+
+// Add Session support
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
 // Register FluentValidation
 builder.Services.AddValidatorsFromAssemblyContaining<CommonArchitecture.Web.Validators.CreateProductDtoValidator>();
 builder.Services.AddValidatorsFromAssemblyContaining<CommonArchitecture.Web.Validators.CreateRoleDtoValidator>();
-builder.Services.AddValidatorsFromAssemblyContaining<CommonArchitecture.Web.Validators.CreateUserDtoValidator>();
 builder.Services.AddValidatorsFromAssemblyContaining<CommonArchitecture.Web.Validators.CreateUserDtoValidator>();
 
 // Register NToastNotify with ControllersWithViews
@@ -57,12 +71,21 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+// Add Session middleware
+app.UseSession();
+
 app.UseAuthorization();
 
 // Add NToastNotify middleware
 app.UseNToastNotify();
 
 app.MapStaticAssets();
+
+// Area route mapping - must come before default route
+app.MapControllerRoute(
+    name: "areas",
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}")
+    .WithStaticAssets();
 
 app.MapControllerRoute(
     name: "default",
