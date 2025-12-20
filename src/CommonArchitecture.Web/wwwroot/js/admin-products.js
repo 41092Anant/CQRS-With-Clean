@@ -308,13 +308,25 @@ $(document).ready(function () {
         $('#saveSpinner').removeClass('d-none');
         $('#btnSaveProduct').prop('disabled', true);
 
+        console.log('Saving product:', {
+            url: url,
+            method: isEditMode ? 'PUT' : 'POST',
+            formData: formData,
+            token: token ? 'Present' : 'Missing',
+            productId: currentProductId
+        });
+
         $.ajax({
             url: url,
             type: isEditMode ? 'PUT' : 'POST',
             contentType: 'application/json',
             data: JSON.stringify(formData),
-            headers: { 'RequestVerificationToken': token },
+            headers: { 
+                'RequestVerificationToken': token,
+                'X-CSRF-TOKEN': token
+            },
             success: function (response) {
+                console.log('Save response:', response);
                 if (response.success) {
                     $('#productModal').modal('hide');
                     showAlert('success', response.message);
@@ -327,8 +339,27 @@ $(document).ready(function () {
                     showAlert('danger', response.message || 'An error occurred.');
                 }
             },
-            error: function () {
-                showAlert('danger', 'An error occurred while saving the product. Please try again.');
+            error: function (xhr) {
+                console.error('Save error:', {
+                    status: xhr.status,
+                    statusText: xhr.statusText,
+                    response: xhr.responseJSON || xhr.responseText
+                });
+
+                if (xhr.status === 401) {
+                    showAlert('danger', 'Your session has expired. Please login again.');
+                    setTimeout(() => {
+                        window.location.href = '/Admin/Auth/Login';
+                    }, 2000);
+                } else if (xhr.status === 403) {
+                    showAlert('danger', 'You do not have permission to perform this action.');
+                } else if (xhr.status === 404) {
+                    showAlert('danger', 'Product not found on server.');
+                } else if (xhr.status === 500) {
+                    showAlert('danger', 'Server error: ' + (xhr.responseJSON?.message || 'Please check the API logs'));
+                } else {
+                    showAlert('danger', `Error (${xhr.status}): ${xhr.statusText}. Check browser console for details.`);
+                }
             },
             complete: function () {
                 $('#saveSpinner').addClass('d-none');
@@ -344,7 +375,10 @@ $(document).ready(function () {
         $.ajax({
             url: `${areaPrefix}/Products/Delete/${currentProductId}`,
             type: 'DELETE',
-            headers: { 'RequestVerificationToken': token },
+            headers: { 
+                'RequestVerificationToken': token,
+                'X-CSRF-TOKEN': token // Add as header for DELETE requests
+            },
             success: function (response) {
                 if (response.success) {
                     $('#deleteModal').modal('hide');
@@ -354,8 +388,15 @@ $(document).ready(function () {
                     showAlert('danger', response.message || 'Failed to delete product.');
                 }
             },
-            error: function () {
-                showAlert('danger', 'An error occurred while deleting the product. Please try again.');
+            error: function (xhr) {
+                if (xhr.status === 401) {
+                    showAlert('danger', 'Your session has expired. Please login again.');
+                    window.location.href = '/Admin/Auth/Login';
+                } else if (xhr.status === 403) {
+                    showAlert('danger', 'You do not have permission to perform this action.');
+                } else {
+                    showAlert('danger', 'An error occurred while deleting the product. Please try again.');
+                }
             },
             complete: function () {
                 $('#deleteSpinner').addClass('d-none');

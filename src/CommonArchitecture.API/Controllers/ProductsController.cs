@@ -5,6 +5,7 @@ using CommonArchitecture.Application.DTOs;
 using CommonArchitecture.Application.Queries.Products.GetAllProducts;
 using CommonArchitecture.Application.Queries.Products.GetProductById;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CommonArchitecture.API.Controllers;
@@ -21,6 +22,7 @@ public class ProductsController : ControllerBase
     }
 
     [HttpGet]
+    [AllowAnonymous]
     public async Task<ActionResult<PaginatedResult<ProductDto>>> GetAll([FromQuery] ProductQueryParameters parameters)
     {
         var query = new GetAllProductsQuery(parameters);
@@ -29,6 +31,7 @@ public class ProductsController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [AllowAnonymous]
     public async Task<ActionResult<ProductDto>> GetById(int id)
     {
         var query = new GetProductByIdQuery(id);
@@ -41,6 +44,7 @@ public class ProductsController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize]
     public async Task<ActionResult<ProductDto>> Create(CreateProductDto createDto)
     {
         var command = new CreateProductCommand(
@@ -55,6 +59,7 @@ public class ProductsController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [Authorize]
     public async Task<IActionResult> Update(int id, UpdateProductDto updateDto)
     {
         var command = new UpdateProductCommand(
@@ -73,6 +78,7 @@ public class ProductsController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [Authorize]
     public async Task<IActionResult> Delete(int id)
     {
         var command = new DeleteProductCommand(id);

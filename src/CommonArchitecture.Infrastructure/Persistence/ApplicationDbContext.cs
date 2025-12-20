@@ -12,6 +12,11 @@ public class ApplicationDbContext : DbContext
     public DbSet<Product> Products { get; set; }
     public DbSet<Role> Roles { get; set; }
     public DbSet<User> Users { get; set; }
+    public DbSet<RefreshToken> RefreshTokens { get; set; }
+
+    // Logging tables
+    public DbSet<ErrorLog> ErrorLogs { get; set; }
+    public DbSet<RequestResponseLog> RequestResponseLogs { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -53,6 +58,55 @@ public class ApplicationDbContext : DbContext
                 .WithMany()
                 .HasForeignKey(u => u.RoleId)
                 .OnDelete(DeleteBehavior.Restrict);
+        });
+
+        // Configure RefreshToken entity
+        modelBuilder.Entity<RefreshToken>(entity =>
+        {
+            entity.HasKey(rt => rt.Id);
+            entity.Property(rt => rt.Token).IsRequired().HasMaxLength(500);
+            entity.Property(rt => rt.DeviceFingerprint).HasMaxLength(256);
+            entity.Property(rt => rt.IpAddress).HasMaxLength(45); // IPv6 max length
+            entity.Property(rt => rt.UserAgent).HasMaxLength(500);
+            entity.Property(rt => rt.PreviousToken).HasMaxLength(500);
+            entity.Property(rt => rt.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
+            entity.HasIndex(rt => rt.Token).IsUnique();
+            entity.HasIndex(rt => rt.UserId);
+            entity.HasIndex(rt => new { rt.UserId, rt.DeviceFingerprint });
+
+            // Configure relationship with User
+            entity.HasOne(rt => rt.User)
+                .WithMany()
+                .HasForeignKey(rt => rt.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        // Configure ErrorLog
+        modelBuilder.Entity<ErrorLog>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.Message).IsRequired().HasMaxLength(2000);
+            entity.Property(e => e.StackTrace).HasMaxLength(4000);
+            entity.Property(e => e.Path).HasMaxLength(1024);
+            entity.Property(e => e.Method).HasMaxLength(16);
+            entity.Property(e => e.QueryString).HasMaxLength(2000);
+            entity.Property(e => e.UserId).HasMaxLength(128);
+            entity.Property(e => e.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
+        });
+
+        // Configure RequestResponseLog
+        modelBuilder.Entity<RequestResponseLog>(entity =>
+        {
+            entity.HasKey(r => r.Id);
+            entity.Property(r => r.Method).HasMaxLength(16);
+            entity.Property(r => r.Path).HasMaxLength(1024);
+            entity.Property(r => r.QueryString).HasMaxLength(2000);
+            entity.Property(r => r.RequestBody).HasMaxLength(8000);
+            entity.Property(r => r.ResponseBody).HasMaxLength(8000);
+            entity.Property(r => r.IpAddress).HasMaxLength(45);
+            entity.Property(r => r.UserAgent).HasMaxLength(1000);
+            entity.Property(r => r.UserId).HasMaxLength(128);
+            entity.Property(r => r.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
         });
     }
 }

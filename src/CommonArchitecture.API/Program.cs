@@ -2,10 +2,26 @@ using CommonArchitecture.Application.Services;
 using CommonArchitecture.Core.Interfaces;
 using CommonArchitecture.Infrastructure.Persistence;
 using CommonArchitecture.Infrastructure.Repositories;
+using CommonArchitecture.API.Middlewares;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
+using System.Threading.RateLimiting;
+using System.Text;
+using CommonArchitecture.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Add User Secrets in Development
+if (builder.Environment.IsDevelopment())
+{
+    builder.Configuration.AddUserSecrets<Program>();
+}
+
+// Add Environment Variables (takes precedence)
+builder.Configuration.AddEnvironmentVariables();
 
 // Add services to the container.
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -16,13 +32,75 @@ builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+
+// Register JWT Service
+builder.Services.AddScoped<IJwtService, JwtService>();
+
+// Register Background Services
+builder.Services.AddHostedService<CommonArchitecture.API.Services.RefreshTokenCleanupService>();
+
+// Register logging service
+builder.Services.AddScoped<ILoggingService, LoggingService>();
+
+// Configure Rate Limiting
+builder.Services.AddRateLimiter(options =>
+{
+    options.AddPolicy("AuthPolicy", context =>
+        RateLimitPartition.GetFixedWindowLimiter(
+            partitionKey: context.Connection.RemoteIpAddress?.ToString() ?? "unknown",
+            factory: partition => new FixedWindowRateLimiterOptions
+            {
+                AutoReplenishment = true,
+                PermitLimit = 5, // 5 requests
+                Window = TimeSpan.FromMinutes(1) // per minute
+            }));
+    
+    options.OnRejected = async (context, cancellationToken) =>
+    {
+        context.HttpContext.Response.StatusCode = 429;
+        await context.HttpContext.Response.WriteAsync("Rate limit exceeded. Please try again later.", cancellationToken);
+    };
+});
+
+// Configure JWT Authentication
+var secretKey = builder.Configuration["Jwt:SecretKey"] 
+    ?? throw new InvalidOperationException("JWT SecretKey not configured. Set it in User Secrets or Environment Variables.");
+var issuer = builder.Configuration["Jwt:Issuer"] ?? "CommonArchitecture.API";
+var audience = builder.Configuration["Jwt:Audience"] ?? "CommonArchitecture.Web";
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = issuer,
+        ValidAudience = audience,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
+        ClockSkew = TimeSpan.Zero
+    };
+});
+
+builder.Services.AddAuthorization();
 
 // Register MediatR for CQRS pattern
 builder.Services.AddMediatR(cfg => 
     cfg.RegisterServicesFromAssembly(typeof(CommonArchitecture.Application.Commands.Products.CreateProduct.CreateProductCommand).Assembly));
 
 // Add Controllers
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.PropertyNamingPolicy = null; // Preserve original property names
+    });
 
 // Add OpenAPI
 builder.Services.AddOpenApi();
@@ -40,6 +118,19 @@ app.UseHttpsRedirection();
 
 // Enable static files for uploaded images
 app.UseStaticFiles();
+
+// Request/Response logging middleware (early)
+app.UseMiddleware<RequestResponseLoggingMiddleware>();
+
+// Rate Limiting middleware (must be before UseAuthentication)
+app.UseRateLimiter();
+
+// Exception handling middleware (should be before authentication/authorization)
+app.UseMiddleware<ExceptionHandlingMiddleware>();
+
+// Authentication & Authorization middleware
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
 

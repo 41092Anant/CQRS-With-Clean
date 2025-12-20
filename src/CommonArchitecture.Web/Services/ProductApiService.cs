@@ -74,13 +74,48 @@ public class ProductApiService : IProductApiService
     {
         try
         {
+            _logger.LogInformation("Attempting to update product {ProductId} with data: {@UpdateData}", id, updateDto);
+            _logger.LogInformation("Full URL: api/products/{ProductId}", id);
+    
             var response = await _httpClient.PutAsJsonAsync($"api/products/{id}", updateDto);
-            return response.IsSuccessStatusCode;
-        }
+     
+            _logger.LogInformation("API Response Status: {StatusCode}", response.StatusCode);
+
+            if (!response.IsSuccessStatusCode)
+                 {
+              var errorContent = await response.Content.ReadAsStringAsync();
+                 _logger.LogError("Product update failed. Status: {StatusCode}, Error: {ErrorContent}", 
+                 response.StatusCode, errorContent);
+                
+               // Log 401 Unauthorized separately for JWT issues
+                  if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                   {
+                   _logger.LogError("JWT token issue - Unauthorized (401). Check token expiration.");
+              }
+          
+              // Log 404 separately
+              if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                {
+  _logger.LogError("Product {ProductId} not found in API database", id);
+  }
+
+                    return false;
+       }
+
+ _logger.LogInformation("Product {ProductId} updated successfully", id);
+            return true;
+    }
+ catch (HttpRequestException ex)
+    {
+            _logger.LogError(ex, "HttpRequestException updating product {ProductId}. Status: {StatusCode}, Message: {Message}", 
+    id, ex.StatusCode, ex.Message);
+     return false;
+   }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error updating product {ProductId} via API", id);
-            return false;
+        _logger.LogError(ex, "Error updating product {ProductId} via API. Exception Type: {ExceptionType}, Message: {ExceptionMessage}", 
+     id, ex.GetType().Name, ex.Message);
+     return false;
         }
     }
 
@@ -88,13 +123,41 @@ public class ProductApiService : IProductApiService
     {
         try
         {
-            var response = await _httpClient.DeleteAsync($"api/products/{id}");
-            return response.IsSuccessStatusCode;
+  _logger.LogInformation("Attempting to delete product {ProductId}", id);
+  
+  var response = await _httpClient.DeleteAsync($"api/products/{id}");
+      
+   if (!response.IsSuccessStatusCode)
+   {
+            var errorContent = await response.Content.ReadAsStringAsync();
+      _logger.LogError("Product delete failed. Status: {StatusCode}, Error: {ErrorContent}", 
+      response.StatusCode, errorContent);
+         
+        if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+  {
+         _logger.LogError("JWT token issue - Unauthorized (401). Check token expiration.");
+      }
+      
+         if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+ {
+          _logger.LogError("Product {ProductId} not found in API", id);
+     }
+          
+         return false;
+    }
+
+       _logger.LogInformation("Product {ProductId} deleted successfully", id);
+          return true;
         }
-        catch (Exception ex)
+        catch (HttpRequestException ex)
         {
-            _logger.LogError(ex, "Error deleting product {ProductId} via API", id);
-            return false;
+            _logger.LogError(ex, "HttpRequestException deleting product {ProductId}. Message: {Message}", id, ex.Message);
+     return false;
+        }
+   catch (Exception ex)
+  {
+ _logger.LogError(ex, "Error deleting product {ProductId} via API. Exception: {ExceptionMessage}", id, ex.Message);
+         return false;
         }
     }
 }

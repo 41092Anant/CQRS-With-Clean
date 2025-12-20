@@ -32,8 +32,40 @@
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "CommonArchitecture.Application.DTOs.RefreshTokenRequestDto",
+        "IsRequired": false
+      }
+    ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CommonArchitecture.API.Controllers.AuthController",
+    "Method": "RefreshToken",
+    "RelativePath": "api/Auth/refresh-token",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "CommonArchitecture.Application.DTOs.RefreshTokenRequestDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "CommonArchitecture.Application.DTOs.RefreshTokenResponseDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "CommonArchitecture.API.Controllers.AuthController",
@@ -513,7 +545,7 @@
   },
   {
     "ContainingType": "Program\u002B\u003C\u003Ec__DisplayClass0_0",
-    "Method": "\u003C\u003CMain\u003E$\u003Eb__2",
+    "Method": "\u003C\u003CMain\u003E$\u003Eb__6",
     "RelativePath": "weatherforecast",
     "HttpMethod": "GET",
     "IsController": false,

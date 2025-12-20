@@ -5,12 +5,14 @@ using CommonArchitecture.Application.DTOs;
 using CommonArchitecture.Application.Queries.Users.GetAllUsers;
 using CommonArchitecture.Application.Queries.Users.GetUserById;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CommonArchitecture.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class UsersController : ControllerBase
 {
     private readonly IMediator _mediator;

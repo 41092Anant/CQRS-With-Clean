@@ -77,8 +77,32 @@ public class RoleApiService : IRoleApiService
     {
         try
         {
+            _logger.LogInformation("Attempting to update role {RoleId} with data: {@UpdateData}", id, updateDto);
+            
             var response = await _httpClient.PutAsJsonAsync($"api/roles/{id}", updateDto);
-            return response.IsSuccessStatusCode;
+            
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorContent = await response.Content.ReadAsStringAsync();
+                _logger.LogError("Role update failed. Status: {StatusCode}, Error: {ErrorContent}", 
+                     response.StatusCode, errorContent);
+
+                // Log 401 Unauthorized separately for JWT issues
+                if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    _logger.LogError("JWT token issue - Unauthorized (401). Check token expiration.");
+                }
+
+                return false;
+            }
+
+            _logger.LogInformation("Role {RoleId} updated successfully", id);
+            return true;
+        }
+        catch (HttpRequestException ex)
+        {
+            _logger.LogError(ex, "HttpRequestException updating role {RoleId}. Message: {Message}", id, ex.Message);
+            return false;
         }
         catch (Exception ex)
         {
@@ -91,8 +115,31 @@ public class RoleApiService : IRoleApiService
     {
         try
         {
+            _logger.LogInformation("Attempting to delete role {RoleId}", id);
+            
             var response = await _httpClient.DeleteAsync($"api/roles/{id}");
-            return response.IsSuccessStatusCode;
+            
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorContent = await response.Content.ReadAsStringAsync();
+                _logger.LogError("Role delete failed. Status: {StatusCode}, Error: {ErrorContent}", 
+                     response.StatusCode, errorContent);
+
+                if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    _logger.LogError("JWT token issue - Unauthorized (401). Check token expiration.");
+                }
+                
+                return false;
+            }
+
+            _logger.LogInformation("Role {RoleId} deleted successfully", id);
+            return true;
+        }
+        catch (HttpRequestException ex)
+        {
+            _logger.LogError(ex, "HttpRequestException deleting role {RoleId}. Message: {Message}", id, ex.Message);
+            return false;
         }
         catch (Exception ex)
         {

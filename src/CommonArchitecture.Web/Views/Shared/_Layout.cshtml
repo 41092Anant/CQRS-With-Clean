@@ -7,72 +7,14 @@
     <script type="importmap"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/CommonArchitecture.Web.styles.css" asp-append-version="true" />
-    <style>
-        body {
-            font-family: 'Outfit', sans-serif;
-        }
-        .navbar-brand {
-            font-weight: 700;
-        }
-        .hero-section {
-            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
-            color: #fff;
-            padding: 4rem 0;
-            margin-bottom: 2rem;
-        }
-        .hero-section h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-        }
-        .nav-card {
-            background: #fff;
-            border-radius: 16px;
-            padding: 2rem;
-            text-align: center;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            color: inherit;
-            display: block;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            border: 1px solid #e2e8f0;
-        }
-        .nav-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-        .nav-card i {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            display: block;
-        }
-        .nav-card.admin-card i {
-            color: #4f46e5;
-        }
-        .nav-card.shop-card i {
-            color: #e11d48;
-        }
-        .nav-card h3 {
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-        .nav-card p {
-            color: #64748b;
-            margin: 0;
-        }
-    </style>
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                    <i class="bi bi-code-square text-primary"></i> CommonArchitecture
-                </a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">CommonArchitecture.Web</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -80,39 +22,19 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">
-                                <i class="bi bi-house"></i> Home
-                            </a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown">
-                                <i class="bi bi-shield-lock"></i> Admin
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">
-                                    <i class="bi bi-speedometer2"></i> Dashboard
-                                </a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" asp-area="Admin" asp-controller="Products" asp-action="Index">
-                                    <i class="bi bi-box-seam"></i> Products
-                                </a></li>
-                                <li><a class="dropdown-item" asp-area="Admin" asp-controller="Roles" asp-action="Index">
-                                    <i class="bi bi-shield-check"></i> Roles
-                                </a></li>
-                                <li><a class="dropdown-item" asp-area="Admin" asp-controller="Users" asp-action="Index">
-                                    <i class="bi bi-people"></i> Users
-                                </a></li>
-                            </ul>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Ecommerce" asp-controller="Shop" asp-action="Index">
-                                <i class="bi bi-shop"></i> Shop
-                            </a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="Index">Products</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">
-                                <i class="bi bi-shield"></i> Privacy
-                            </a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Roles" asp-action="Index">Role Master</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">User Master</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                     </ul>
                     @Html.AntiForgeryToken()

@@ -138,6 +138,11 @@ public class ProductsController : Controller
             _toastNotification.AddSuccessToastMessage("Product updated successfully!");
             return Json(new { success = true, message = "Product updated successfully!" });
         }
+        catch (HttpRequestException ex) when (ex.Message.Contains("401") || ex.Message.Contains("Unauthorized"))
+        {
+            _logger.LogWarning(ex, "Unauthorized request when updating product {ProductId}", id);
+            return Unauthorized(new { success = false, message = "Session expired. Please login again." });
+        }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error updating product {ProductId}", id);
@@ -162,6 +167,11 @@ public class ProductsController : Controller
 
             _toastNotification.AddSuccessToastMessage("Product deleted successfully!");
             return Json(new { success = true, message = "Product deleted successfully!" });
+        }
+        catch (HttpRequestException ex) when (ex.Message.Contains("401") || ex.Message.Contains("Unauthorized"))
+        {
+            _logger.LogWarning(ex, "Unauthorized request when deleting product {ProductId}", id);
+            return Unauthorized(new { success = false, message = "Session expired. Please login again." });
         }
         catch (Exception ex)
         {

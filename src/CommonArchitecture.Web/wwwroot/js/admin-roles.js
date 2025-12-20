@@ -292,13 +292,25 @@ $(document).ready(function () {
         $('#saveSpinner').removeClass('d-none');
         $('#btnSaveRole').prop('disabled', true);
 
+        console.log('Saving role:', {
+            url: url,
+            method: isEditMode ? 'PUT' : 'POST',
+            formData: formData,
+            token: token ? 'Present' : 'Missing',
+            roleId: currentRoleId
+        });
+
         $.ajax({
             url: url,
             type: isEditMode ? 'PUT' : 'POST',
             contentType: 'application/json',
             data: JSON.stringify(formData),
-            headers: { 'RequestVerificationToken': token },
+            headers: {
+                'RequestVerificationToken': token,
+                'X-CSRF-TOKEN': token
+            },
             success: function (response) {
+                console.log('Save response:', response);
                 if (response.success) {
                     $('#roleModal').modal('hide');
                     showAlert('success', response.message);
@@ -311,8 +323,27 @@ $(document).ready(function () {
                     showAlert('danger', response.message || 'An error occurred.');
                 }
             },
-            error: function () {
-                showAlert('danger', 'An error occurred while saving the role. Please try again.');
+            error: function (xhr) {
+                console.error('Save error:', {
+                    status: xhr.status,
+                    statusText: xhr.statusText,
+                    response: xhr.responseJSON || xhr.responseText
+                });
+
+                if (xhr.status === 401) {
+                    showAlert('danger', 'Your session has expired. Please login again.');
+                    setTimeout(() => {
+                        window.location.href = '/Admin/Auth/Login';
+                    }, 2000);
+                } else if (xhr.status === 403) {
+                    showAlert('danger', 'You do not have permission to perform this action.');
+                } else if (xhr.status === 404) {
+                    showAlert('danger', 'Role not found on server.');
+                } else if (xhr.status === 500) {
+                    showAlert('danger', 'Server error: ' + (xhr.responseJSON?.message || 'Please check the API logs'));
+                } else {
+                    showAlert('danger', `Error (${xhr.status}): ${xhr.statusText}. Check browser console for details.`);
+                }
             },
             complete: function () {
                 $('#saveSpinner').addClass('d-none');
@@ -325,11 +356,21 @@ $(document).ready(function () {
         $('#deleteSpinner').removeClass('d-none');
         $('#btnConfirmDelete').prop('disabled', true);
 
+        console.log('Deleting role:', {
+            url: `${areaPrefix}/Roles/Delete/${currentRoleId}`,
+            roleId: currentRoleId,
+            token: token ? 'Present' : 'Missing'
+        });
+
         $.ajax({
             url: `${areaPrefix}/Roles/Delete/${currentRoleId}`,
             type: 'DELETE',
-            headers: { 'RequestVerificationToken': token },
+            headers: {
+                'RequestVerificationToken': token,
+                'X-CSRF-TOKEN': token
+            },
             success: function (response) {
+                console.log('Delete response:', response);
                 if (response.success) {
                     $('#deleteModal').modal('hide');
                     showAlert('success', response.message);
@@ -338,8 +379,27 @@ $(document).ready(function () {
                     showAlert('danger', response.message || 'Failed to delete role.');
                 }
             },
-            error: function () {
-                showAlert('danger', 'An error occurred while deleting the role. Please try again.');
+            error: function (xhr) {
+                console.error('Delete error:', {
+                    status: xhr.status,
+                    statusText: xhr.statusText,
+                    response: xhr.responseJSON || xhr.responseText
+                });
+
+                if (xhr.status === 401) {
+                    showAlert('danger', 'Your session has expired. Please login again.');
+                    setTimeout(() => {
+                        window.location.href = '/Admin/Auth/Login';
+                    }, 2000);
+                } else if (xhr.status === 403) {
+                    showAlert('danger', 'You do not have permission to perform this action.');
+                } else if (xhr.status === 404) {
+                    showAlert('danger', 'Role not found on server.');
+                } else if (xhr.status === 500) {
+                    showAlert('danger', 'Server error: ' + (xhr.responseJSON?.message || 'Please check the API logs'));
+                } else {
+                    showAlert('danger', `Error (${xhr.status}): ${xhr.statusText}. Check browser console for details.`);
+                }
             },
             complete: function () {
                 $('#deleteSpinner').addClass('d-none');

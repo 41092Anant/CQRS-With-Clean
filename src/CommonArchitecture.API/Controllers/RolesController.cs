@@ -5,6 +5,7 @@ using CommonArchitecture.Application.DTOs;
 using CommonArchitecture.Application.Queries.Roles.GetAllRoles;
 using CommonArchitecture.Application.Queries.Roles.GetRoleById;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CommonArchitecture.API.Controllers;
@@ -21,6 +22,7 @@ public class RolesController : ControllerBase
     }
 
     [HttpGet]
+    [AllowAnonymous]
     public async Task<ActionResult<PaginatedResult<RoleDto>>> GetAll([FromQuery] RoleQueryParameters parameters)
     {
         var query = new GetAllRolesQuery(parameters);
@@ -29,6 +31,7 @@ public class RolesController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [AllowAnonymous]
     public async Task<ActionResult<RoleDto>> GetById(int id)
     {
         var query = new GetRoleByIdQuery(id);
@@ -41,6 +44,7 @@ public class RolesController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize]
     public async Task<ActionResult<RoleDto>> Create(CreateRoleDto createDto)
     {
         var command = new CreateRoleCommand(
@@ -52,6 +56,7 @@ public class RolesController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [Authorize]
     public async Task<IActionResult> Update(int id, UpdateRoleDto updateDto)
     {
         var command = new UpdateRoleCommand(
@@ -67,6 +72,7 @@ public class RolesController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [Authorize]
     public async Task<IActionResult> Delete(int id)
     {
         var command = new DeleteRoleCommand(id);
