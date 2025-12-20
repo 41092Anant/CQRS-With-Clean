@@ -95,6 +95,7 @@ builder.Services.AddControllersWithViews().AddNToastNotifyNoty(new NotyOptions
  Theme = "metroui"
 });
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
