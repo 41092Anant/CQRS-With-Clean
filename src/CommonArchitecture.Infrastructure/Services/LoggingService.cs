@@ -19,9 +19,76 @@ public class LoggingService : ILoggingService
  await _db.SaveChangesAsync();
  }
 
- public async Task LogRequestResponseAsync(RequestResponseLog log)
- {
- _db.RequestResponseLogs.Add(log);
- await _db.SaveChangesAsync();
- }
+    public async Task LogRequestResponseAsync(RequestResponseLog log)
+    {
+        _db.RequestResponseLogs.Add(log);
+        await _db.SaveChangesAsync();
+    }
+
+    public async Task<(IEnumerable<RequestResponseLog> Logs, int TotalCount)> GetLogsAsync(
+        int pageNumber, 
+        int pageSize, 
+        string? searchTerm = null, 
+        string? sortBy = null, 
+        string sortOrder = "desc",
+        DateTime? fromDate = null,
+        DateTime? toDate = null,
+        int? statusCode = null,
+        string? method = null)
+    {
+        var query = _db.RequestResponseLogs.AsQueryable();
+
+        // Filtering
+        if (!string.IsNullOrWhiteSpace(searchTerm))
+        {
+            query = query.Where(l => 
+                l.Path.Contains(searchTerm) || 
+                (l.RequestBody != null && l.RequestBody.Contains(searchTerm)) ||
+                (l.ResponseBody != null && l.ResponseBody.Contains(searchTerm)) ||
+                (l.IpAddress != null && l.IpAddress.Contains(searchTerm)));
+        }
+
+        if (fromDate.HasValue)
+            query = query.Where(l => l.CreatedAt >= fromDate.Value);
+
+        if (toDate.HasValue)
+            query = query.Where(l => l.CreatedAt <= toDate.Value);
+
+        if (statusCode.HasValue)
+            query = query.Where(l => l.ResponseStatusCode == statusCode.Value);
+
+        if (!string.IsNullOrWhiteSpace(method))
+            query = query.Where(l => l.Method == method);
+
+        // Sorting
+        if (!string.IsNullOrWhiteSpace(sortBy))
+        {
+            var isDesc = sortOrder?.ToLower() == "desc";
+            query = sortBy.ToLower() switch
+            {
+                "createdat" => isDesc ? query.OrderByDescending(l => l.CreatedAt) : query.OrderBy(l => l.CreatedAt),
+                "durationms" => isDesc ? query.OrderByDescending(l => l.DurationMs) : query.OrderBy(l => l.DurationMs),
+                "responsestatuscode" => isDesc ? query.OrderByDescending(l => l.ResponseStatusCode) : query.OrderBy(l => l.ResponseStatusCode),
+                "method" => isDesc ? query.OrderByDescending(l => l.Method) : query.OrderBy(l => l.Method),
+                "path" => isDesc ? query.OrderByDescending(l => l.Path) : query.OrderBy(l => l.Path),
+                _ => query.OrderByDescending(l => l.CreatedAt)
+            };
+        }
+        else
+        {
+            query = query.OrderByDescending(l => l.CreatedAt);
+        }
+
+        var totalCount = await Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.CountAsync(query);
+        
+        var logs = await Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ToListAsync(
+            query.Skip((pageNumber - 1) * pageSize).Take(pageSize));
+
+        return (logs, totalCount);
+    }
+
+    public async Task<RequestResponseLog?> GetLogByIdAsync(int id)
+    {
+        return await _db.RequestResponseLogs.FindAsync(id);
+    }
 }

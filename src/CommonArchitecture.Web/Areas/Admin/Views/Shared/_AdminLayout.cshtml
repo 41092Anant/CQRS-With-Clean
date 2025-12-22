@@ -57,6 +57,13 @@
                                 <span>Users</span>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Logs" ? "active" : "")" 
+                               asp-area="Admin" asp-controller="Logs" asp-action="Index">
+                                <i class="bi bi-activity"></i>
+                                <span>System Logs</span>
+                            </a>
+                        </li>
                     }
                     <li class="nav-section-title">Quick Links</li>
                     <li class="nav-item">
