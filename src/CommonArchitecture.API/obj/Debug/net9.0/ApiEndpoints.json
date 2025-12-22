@@ -364,6 +364,66 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "CommonArchitecture.API.Controllers.TestLoggingController",
+    "Method": "TestAuthenticated",
+    "RelativePath": "api/TestLogging/authenticated",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CommonArchitecture.API.Controllers.TestLoggingController",
+    "Method": "TestBadRequest",
+    "RelativePath": "api/TestLogging/bad-request",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CommonArchitecture.API.Controllers.TestLoggingController",
+    "Method": "TestError",
+    "RelativePath": "api/TestLogging/error",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CommonArchitecture.API.Controllers.TestLoggingController",
+    "Method": "TestNotFound",
+    "RelativePath": "api/TestLogging/not-found",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CommonArchitecture.API.Controllers.TestLoggingController",
+    "Method": "TestSuccess",
+    "RelativePath": "api/TestLogging/success",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CommonArchitecture.API.Controllers.TestLoggingController",
+    "Method": "TestUnauthorized",
+    "RelativePath": "api/TestLogging/unauthorized",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "CommonArchitecture.API.Controllers.UsersController",
     "Method": "GetAll",
     "RelativePath": "api/Users",
@@ -545,7 +605,7 @@
   },
   {
     "ContainingType": "Program\u002B\u003C\u003Ec__DisplayClass0_0",
-    "Method": "\u003C\u003CMain\u003E$\u003Eb__6",
+    "Method": "\u003C\u003CMain\u003E$\u003Eb__7",
     "RelativePath": "weatherforecast",
     "HttpMethod": "GET",
     "IsController": false,

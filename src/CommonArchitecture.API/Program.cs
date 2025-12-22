@@ -91,6 +91,21 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddAuthorization();
 
+// Configure CORS for Web layer
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("WebPolicy", policy =>
+    {
+        policy.WithOrigins(
+            "https://localhost:7001",  // Web HTTPS
+            "http://localhost:5000"     // Web HTTP
+        )
+        .AllowAnyMethod()
+        .AllowAnyHeader()
+        .AllowCredentials(); // Required for cookies
+    });
+});
+
 // Register MediatR for CQRS pattern
 builder.Services.AddMediatR(cfg => 
     cfg.RegisterServicesFromAssembly(typeof(CommonArchitecture.Application.Commands.Products.CreateProduct.CreateProductCommand).Assembly));
@@ -115,6 +130,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// Enable CORS
+app.UseCors("WebPolicy");
 
 // Enable static files for uploaded images
 app.UseStaticFiles();

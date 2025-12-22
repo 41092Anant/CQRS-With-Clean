@@ -48,6 +48,9 @@ public class RequestResponseLoggingMiddleware
 
  var duration = (long)(DateTime.UtcNow - start).TotalMilliseconds;
 
+ // Get user ID from JWT claims
+ var userId = context.User?.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+
  var log = new RequestResponseLog
  {
  Method = context.Request.Method,
@@ -59,6 +62,7 @@ public class RequestResponseLoggingMiddleware
  DurationMs = duration,
  IpAddress = context.Connection.RemoteIpAddress?.ToString(),
  UserAgent = context.Request.Headers["User-Agent"].ToString(),
+ UserId = userId,
  CreatedAt = DateTime.UtcNow
  };
 
