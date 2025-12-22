@@ -51,8 +51,8 @@ public class AuthorizeRoleAttribute : ActionFilterAttribute
         {
             if (!_allowedRoles.Contains(roleId))
             {
-                // Redirect to access denied or dashboard
-                context.Result = new RedirectToActionResult("AccessDenied", "Auth", new { area = "Admin" });
+                // Redirect to global access denied page
+                context.Result = new RedirectToActionResult("AccessDenied", "Error", new { area = "" });
                 return;
             }
         }
