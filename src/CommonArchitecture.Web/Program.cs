@@ -82,6 +82,13 @@ builder.Services.AddHttpClient<CommonArchitecture.Web.Services.ILogApiService, C
 })
 .AddHttpMessageHandler<RefreshTokenHandler>();
 
+builder.Services.AddHttpClient<IMenuApiService, MenuApiService>(client =>
+{
+ client.BaseAddress = new Uri(builder.Configuration["ApiSettings:BaseUrl"] ?? "http://localhost:5089");
+ client.DefaultRequestHeaders.Add("Accept", "application/json");
+})
+.AddHttpMessageHandler<RefreshTokenHandler>();
+
 // Register JwtTokenHandler (kept for compatibility if used elsewhere)
 builder.Services.AddTransient<CommonArchitecture.Web.Services.JwtTokenHandler>();
 
@@ -89,10 +96,7 @@ builder.Services.AddTransient<CommonArchitecture.Web.Services.JwtTokenHandler>()
 builder.Services.AddScoped<ILoggingService, LoggingService>();
 
 // Register FluentValidation
-builder.Services.AddValidatorsFromAssemblyContaining<CommonArchitecture.Web.Validators.CreateProductDtoValidator>();
-builder.Services.AddValidatorsFromAssemblyContaining<CommonArchitecture.Web.Validators.CreateRoleDtoValidator>();
-builder.Services.AddValidatorsFromAssemblyContaining<CommonArchitecture.Web.Validators.CreateUserDtoValidator>();
-builder.Services.AddValidatorsFromAssemblyContaining<CommonArchitecture.Web.Validators.CreateUserDtoValidator>();
+builder.Services.AddValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
 
 // Register NToastNotify with ControllersWithViews
 builder.Services.AddControllersWithViews().AddNToastNotifyNoty(new NotyOptions

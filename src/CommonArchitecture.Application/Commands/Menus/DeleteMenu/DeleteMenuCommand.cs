@@ -1,0 +1,13 @@
+using MediatR;
+
+namespace CommonArchitecture.Application.Commands.Menus.DeleteMenu;
+
+public class DeleteMenuCommand : IRequest<bool>
+{
+ public int Id { get; set; }
+
+ public DeleteMenuCommand(int id)
+ {
+ Id = id;
+ }
+}

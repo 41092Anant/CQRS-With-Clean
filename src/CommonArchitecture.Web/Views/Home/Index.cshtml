@@ -1,324 +1,314 @@
 ﻿@{
-    ViewData["Title"] = "Common Architecture";
-    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml"; // Switching to Admin layout for cleaner full-width support if desired, OR stick to standard layout with custom full-width CSS. Let's stick to standard but override container.
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Modern Enterprise Solution";
+    Layout = "~/Views/Shared/_LandingLayout.cshtml";
 }
 
-<div class="landing-page-wrapper">
-    <!-- Hero Section -->
-    <div class="hero-section text-center text-white">
-        <div class="hero-overlay"></div>
-        <div class="container position-relative z-2">
-            <div class="hero-badge mb-3">
-                <span class="badge bg-white bg-opacity-25 border border-white border-opacity-25 rounded-pill px-3 py-2 text-white fw-light">
-                    <i class="bi bi-stars me-2 text-warning"></i>Enterprise Ready .NET 9 Solution
-                </span>
-            </div>
-            <h1 class="display-3 fw-bold mb-3 hero-title">Common Architecture</h1>
-            <p class="lead mb-5 mx-auto hero-subtitle">
-                A production-grade clean architecture scaffold featuring CQRS, Repository Pattern, 
-                Advanced Logging, and a Modular Design for scalable web applications.
-            </p>
-            <div class="d-flex justify-content-center gap-3">
-                <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index" class="btn btn-light btn-lg rounded-pill px-5 fw-bold shadow-lg">
-                    <i class="bi bi-speedometer2 me-2 text-primary"></i>Admin Portal
-                </a>
-                <a asp-area="Ecommerce" asp-controller="Shop" asp-action="Index" class="btn btn-outline-light btn-lg rounded-pill px-5 fw-bold">
-                    <i class="bi bi-shop me-2"></i>Live Store
-                </a>
-            </div>
-        </div>
-        <div class="hero-waves">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-                <path fill="#ffffff" fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
-            </svg>
-        </div>
+<!-- Hero Section -->
+<section class="hero-wrapper position-relative overflow-hidden d-flex align-items-center">
+    <!-- Animated Background -->
+    <div class="hero-bg-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
     </div>
-
-    <!-- Modules Section -->
-    <div class="container py-5 mt-n5 position-relative z-3">
-        <div class="row g-4 justify-content-center">
-            <!-- Admin Module -->
-            <div class="col-md-6 col-lg-5">
-                <div class="card h-100 border-0 shadow-sm hover-elevate">
-                    <div class="card-body p-5">
-                        <div class="icon-box bg-primary bg-opacity-10 text-primary rounded-circle mb-4">
-                            <i class="bi bi-shield-lock-fill fs-2"></i>
-                        </div>
-                        <h3 class="fw-bold mb-3">Admin Portal</h3>
-                        <p class="text-muted mb-4">
-                            Complete management suite with RBAC (Role Based Access Control). Manage users, products, logs, and system settings in a secure environment.
-                        </p>
-                        <ul class="list-unstyled text-muted mb-4">
-                            <li class="mb-2"><i class="bi bi-check-circle-fill text-primary me-2"></i>User & Role Management</li>
-                            <li class="mb-2"><i class="bi bi-check-circle-fill text-primary me-2"></i>Product Inventory System</li>
-                            <li class="mb-2"><i class="bi bi-check-circle-fill text-primary me-2"></i>System Request/Response Logging</li>
-                            <li class="mb-2"><i class="bi bi-check-circle-fill text-primary me-2"></i>Secure Authentication Flow</li>
-                        </ul>
-                        <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index" class="btn btn-primary rounded-pill px-4 stretched-link">
-                            Enter Dashboard <i class="bi bi-arrow-right ms-2"></i>
-                        </a>
-                    </div>
+    
+    <div class="container position-relative z-2">
+        <div class="row align-items-center">
+            <div class="col-lg-6 hero-text text-center text-lg-start mb-5 mb-lg-0">
+                <div class="badge bg-white bg-opacity-10 border border-white border-opacity-25 text-white rounded-pill px-3 py-2 mb-4 fw-light backdrop-blur shadow-sm">
+                    <span class="dot bg-success d-inline-block rounded-circle me-2"></span> .NET 9.0 Release Candidate
                 </div>
-            </div>
-
-            <!-- Shop Module -->
-            <div class="col-md-6 col-lg-5">
-                <div class="card h-100 border-0 shadow-sm hover-elevate">
-                    <div class="card-body p-5">
-                        <div class="icon-box bg-success bg-opacity-10 text-success rounded-circle mb-4">
-                            <i class="bi bi-bag-heart-fill fs-2"></i>
-                        </div>
-                        <h3 class="fw-bold mb-3">E-Commerce Store</h3>
-                        <p class="text-muted mb-4">
-                            Modern customer-facing storefront. Features a responsive product catalog, search functionality, and a seamless shopping experience.
-                        </p>
-                        <ul class="list-unstyled text-muted mb-4">
-                            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Responsive Product Grid</li>
-                            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Real-time Search & Filtering</li>
-                            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Dynamic Pagination</li>
-                            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>optimized Performance</li>
-                        </ul>
-                        <a asp-area="Ecommerce" asp-controller="Shop" asp-action="Index" class="btn btn-outline-success rounded-pill px-4 stretched-link">
-                            Visit Store <i class="bi bi-arrow-right ms-2"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Technical Architecture Section -->
-    <div class="bg-light py-5 mt-5">
-        <div class="container py-5">
-            <div class="row mb-5">
-                <div class="col-lg-8 mx-auto text-center">
-                    <h6 class="text-primary fw-bold text-uppercase tracking-wide">Under The Hood</h6>
-                    <h2 class="fw-bold mb-3">Clean Architecture & Design Patterns</h2>
-                    <p class="text-muted lead">
-                        Built strictly following the Clean Architecture principles to ensure separation of concerns, testability, and maintainability.
-                    </p>
-                </div>
-            </div>
-
-            <div class="row g-5 align-items-center">
-                <!-- Diagram Visual (CSS Art) -->
-                <div class="col-lg-5">
-                    <div class="architecture-visual p-4 bg-white rounded-4 shadow-sm text-center">
-                        <div class="layer layer-web p-3 mb-3 rounded-3 border border-primary bg-primary bg-opacity-10">
-                            <h5 class="fw-bold text-primary mb-1">Web / API Layer</h5>
-                            <small class="text-muted">Controllers, Middleware, Views</small>
-                        </div>
-                        <div class="arrow-down mb-2 text-muted"><i class="bi bi-arrow-down"></i></div>
-                        <div class="layer layer-app p-3 mb-3 rounded-3 border border-success bg-success bg-opacity-10">
-                            <h5 class="fw-bold text-success mb-1">Application Layer</h5>
-                            <small class="text-muted">DTOs, Interfaces, CQRS Handlers</small>
-                        </div>
-                        <div class="arrow-down mb-2 text-muted"><i class="bi bi-arrow-down"></i></div>
-                        <div class="d-flex gap-3 justify-content-center">
-                             <div class="layer layer-domain p-3 rounded-3 border border-warning bg-warning bg-opacity-10 flex-grow-1">
-                                <h5 class="fw-bold text-warning mb-1">Core Domain</h5>
-                                <small class="text-muted text-nowrap">Entities, Interfaces</small>
-                            </div>
-                            <div class="layer layer-infra p-3 rounded-3 border border-info bg-info bg-opacity-10 flex-grow-1">
-                                <h5 class="fw-bold text-info mb-1">Infrastructure</h5>
-                                <small class="text-muted text-nowrap">EF Core, Repositories</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Technical Details List -->
-                <div class="col-lg-7">
-                    <div class="row g-4">
-                        <div class="col-md-6">
-                            <div class="feature-item d-flex">
-                                <div class="icon-sm bg-primary text-white rounded p-2 me-3"><i class="bi bi-layers"></i></div>
-                                <div>
-                                    <h6 class="fw-bold">Clean Architecture</h6>
-                                    <p class="small text-muted mb-0">Strict dependency flow. Core has no external dependencies. Web depends on Application & Infrastructure.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="feature-item d-flex">
-                                <div class="icon-sm bg-success text-white rounded p-2 me-3"><i class="bi bi-lightning-charge"></i></div>
-                                <div>
-                                    <h6 class="fw-bold">CQRS Pattern</h6>
-                                    <p class="small text-muted mb-0">Command Query Responsibility Segregation (ready) for separating read and write operations.</p>
-                                </div>
-                            </div>
-                        </div>
-                         <div class="col-md-6">
-                            <div class="feature-item d-flex">
-                                <div class="icon-sm bg-warning text-white rounded p-2 me-3"><i class="bi bi-database-check"></i></div>
-                                <div>
-                                    <h6 class="fw-bold">Repository Pattern</h6>
-                                    <p class="small text-muted mb-0">Generic Repository implementation to decouple business logic from data access.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="feature-item d-flex">
-                                <div class="icon-sm bg-danger text-white rounded p-2 me-3"><i class="bi bi-bug"></i></div>
-                                <div>
-                                    <h6 class="fw-bold">Global Error Handling</h6>
-                                    <p class="small text-muted mb-0">Centralized middleware for catching exceptions and logging them to the database.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="feature-item d-flex">
-                                <div class="icon-sm bg-info text-white rounded p-2 me-3"><i class="bi bi-journal-text"></i></div>
-                                <div>
-                                    <h6 class="fw-bold">Request Logging</h6>
-                                    <p class="small text-muted mb-0">Full Request/Response logging pipeline for audit trails and debugging.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="feature-item d-flex">
-                                <div class="icon-sm bg-dark text-white rounded p-2 me-3"><i class="bi bi-shield-lock"></i></div>
-                                <div>
-                                    <h6 class="fw-bold">Security First</h6>
-                                    <p class="small text-muted mb-0">Implemented Authentication & Authorization (Roles/Policies) across API and Web.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Project Structure Tree -->
-    <div class="container py-5">
-         <div class="row mb-5">
-            <div class="col-lg-8 mx-auto text-center">
-                <h6 class="text-secondary fw-bold text-uppercase tracking-wide">Developer Guide</h6>
-                <h2 class="fw-bold mb-3">Project Structure Reference</h2>
-                <p class="text-muted">
-                    A quick reference to where everything lives in the solution.
+                <h1 class="display-3 fw-bolder text-white mb-4 leading-tight">
+                    Architect Your Future with <span class="text-gradient-cyan">Precision.</span>
+                </h1>
+                <p class="lead text-white-50 mb-5 pe-lg-5">
+                    A production-ready reference architecture featuring <strong>CQRS</strong>, <strong>Domain-Driven Design</strong>, and modular <strong>Clean Architecture</strong>. Built for scalability.
                 </p>
+                <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center justify-content-lg-start">
+                    <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index" class="btn btn-primary btn-lg rounded-pill px-5 shadow-lg fw-bold hover-lift">
+                        Access Admin <i class="bi bi-chevron-right ms-1"></i>
+                    </a>
+                    <a asp-area="Ecommerce" asp-controller="Shop" asp-action="Index" class="btn btn-outline-light btn-lg rounded-pill px-5 fw-bold hover-lift">
+                        View Storefront
+                    </a>
+                </div>
             </div>
-        </div>
-
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="code-window bg-dark rounded-4 shadow-lg overflow-hidden">
-                    <div class="code-header bg-black bg-opacity-25 p-3 d-flex align-items-center">
-                        <div class="dots d-flex gap-2 me-3">
-                            <span class="dot bg-danger rounded-circle" style="width:10px; height:10px;"></span>
-                            <span class="dot bg-warning rounded-circle" style="width:10px; height:10px;"></span>
-                            <span class="dot bg-success rounded-circle" style="width:10px; height:10px;"></span>
+            <div class="col-lg-6">
+                <!-- Floating Glass Cards (Abstract UI Mockup) -->
+                <div class="hero-visual position-relative">
+                    <div class="glass-card p-4 rounded-4 shadow-2xl animate-float-slow">
+                        <div class="d-flex align-items-center mb-4">
+                            <div class="avatar bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width:48px;height:48px">
+                                <i class="bi bi-shield-lock-fill"></i>
+                            </div>
+                            <div>
+                                <h6 class="text-white mb-0 fw-bold">Admin Portal</h6>
+                                <small class="text-white-50">Role-Based Access Control</small>
+                            </div>
+                            <span class="badge bg-success ms-auto">Active</span>
                         </div>
-                        <small class="text-white-50 font-monospace">Solution Explorer</small>
+                        <div class="d-flex justify-content-between text-white-50 small mb-2">
+                            <span>Total Users</span>
+                            <span>1,248</span>
+                        </div>
+                        <div class="progress bg-white bg-opacity-10" style="height: 6px;">
+                            <div class="progress-bar bg-gradient-cyan" style="width: 75%"></div>
+                        </div>
+                        <div class="mt-4 pt-3 border-top border-white border-opacity-10">
+                            <div class="d-flex gap-2">
+                                <span class="badge bg-white bg-opacity-10 text-white fw-light border border-white border-opacity-10">CQRS</span>
+                                <span class="badge bg-white bg-opacity-10 text-white fw-light border border-white border-opacity-10">MediatR</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="code-body p-4 text-light font-monospace" style="font-size: 0.9rem;">
-                        <div class="ms-0 text-white"><i class="bi bi-box-seam me-2"></i>CommonArchitecture</div>
-                        
-                        <!-- Core -->
-                        <div class="ms-3 mt-2 text-warning"><i class="bi bi-folder me-2"></i>Core (Class Library)</div>
-                        <div class="ms-5 text-white-50">├── Entities <span class="text-secondary">// DB Models (User, Product, Log)</span></div>
-                        <div class="ms-5 text-white-50">├── Interfaces <span class="text-secondary">// Abstractions (IRepository, ILoggingService)</span></div>
-                        <div class="ms-5 text-white-50">└── Enums <span class="text-secondary">// Shared Enums</span></div>
-
-                        <!-- Infrastructure -->
-                        <div class="ms-3 mt-2 text-info"><i class="bi bi-folder me-2"></i>Infrastructure (Class Library)</div>
-                        <div class="ms-5 text-white-50">├── Persistence <span class="text-secondary">// EF Core DbContext, Migrations</span></div>
-                        <div class="ms-5 text-white-50">├── Repositories <span class="text-secondary">// GenericRepository Implementation</span></div>
-                        <div class="ms-5 text-white-50">└── Services <span class="text-secondary">// External integrations (LoggingService)</span></div>
-
-                        <!-- Application -->
-                        <div class="ms-3 mt-2 text-success"><i class="bi bi-folder me-2"></i>Application (Class Library)</div>
-                        <div class="ms-5 text-white-50">├── DTOs <span class="text-secondary">// Data Transfer Objects</span></div>
-                        <div class="ms-5 text-white-50">└── Services <span class="text-secondary">// Application Logic</span></div>
-
-                        <!-- API -->
-                        <div class="ms-3 mt-2 text-primary"><i class="bi bi-folder me-2"></i>API (ASP.NET Core Web API)</div>
-                        <div class="ms-5 text-white-50">├── Controllers <span class="text-secondary">// REST Endpoints</span></div>
-                        <div class="ms-5 text-white-50">├── Middlewares <span class="text-secondary">// Logging, Exception Handling</span></div>
-                        <div class="ms-5 text-white-50">└── Program.cs <span class="text-secondary">// DI Container & Pipeline</span></div>
-
-                        <!-- Web -->
-                        <div class="ms-3 mt-2 text-primary"><i class="bi bi-folder me-2"></i>Web (ASP.NET Core MVC)</div>
-                        <div class="ms-5 text-white-50">├── Areas/Admin <span class="text-secondary">// Admin Portal Views & Controllers</span></div>
-                        <div class="ms-5 text-white-50">├── Areas/Ecommerce <span class="text-secondary">// Shop Views & Controllers</span></div>
-                        <div class="ms-5 text-white-50">└── Views/Home <span class="text-secondary">// This Landing Page</span></div>
+                    
+                    <div class="glass-card p-3 rounded-4 shadow-lg position-absolute top-50 start-0 translate-middle-x animate-float-fast" style="width: 200px; margin-top: 40px; margin-left: -20px;">
+                        <div class="d-flex align-items-center gap-3">
+                             <div class="icon-box bg-success text-white rounded-3 d-flex align-items-center justify-content-center" style="width:40px;height:40px">
+                                <i class="bi bi-code-square"></i>
+                            </div>
+                            <div>
+                                <h6 class="text-white mb-0 fw-bold">Clean Arch</h6>
+                                <small class="text-white-50">Decoupled</small>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</section>
+
+<!-- Modules Section -->
+<section class="py-5 bg-light">
+    <div class="container py-5">
+        <div class="row justify-content-center text-center mb-5">
+            <div class="col-lg-6">
+                <span class="text-primary fw-bold text-uppercase small tracking-wide">Included Modules</span>
+                <h2 class="fw-bold mt-2">Everything you need to build</h2>
+                <p class="text-muted">Two complete functional modules included out of the box.</p>
+            </div>
+        </div>
+        
+        <div class="row g-4 justify-content-center">
+            <!-- App Card -->
+            <div class="col-md-5">
+                <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index" class="card-link text-decoration-none">
+                    <div class="module-card bg-white p-5 rounded-4 shadow-sm h-100 border-0 text-center hover-scale">
+                        <div class="module-icon bg-primary bg-opacity-10 text-primary rounded-circle mx-auto mb-4 d-flex align-items-center justify-content-center">
+                            <i class="bi bi-speedometer2 fs-2"></i>
+                        </div>
+                        <h3 class="fw-bold text-dark mb-3">Admin Dashboard</h3>
+                        <p class="text-muted mb-4">
+                            Full-featured administrative interface with user management, system logs, role configuration, and analytics dashboard.
+                        </p>
+                        <span class="btn btn-link text-primary fw-bold p-0">Launch Dashboard <i class="bi bi-arrow-right ms-1"></i></span>
+                    </div>
+                </a>
+            </div>
+            
+            <!-- Store Card -->
+            <div class="col-md-5">
+                 <a asp-area="Ecommerce" asp-controller="Shop" asp-action="Index" class="card-link text-decoration-none">
+                    <div class="module-card bg-white p-5 rounded-4 shadow-sm h-100 border-0 text-center hover-scale">
+                        <div class="module-icon bg-success bg-opacity-10 text-success rounded-circle mx-auto mb-4 d-flex align-items-center justify-content-center">
+                            <i class="bi bi-shop fs-2"></i>
+                        </div>
+                        <h3 class="fw-bold text-dark mb-3">E-Commerce Store</h3>
+                        <p class="text-muted mb-4">
+                            Customer facing storefront with product catalogs, shopping cart functionality, and responsive grid layouts.
+                        </p>
+                         <span class="btn btn-link text-success fw-bold p-0">Visit Store <i class="bi bi-arrow-right ms-1"></i></span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Tech Stack -->
+<section class="py-5">
+    <div class="container py-5">
+        <div class="row g-5 align-items-center">
+            <div class="col-lg-5">
+                <h2 class="fw-bold mb-4">Powered by Modern Technology</h2>
+                <div class="d-flex flex-column gap-4">
+                    <div class="d-flex">
+                        <div class="tech-icon bg-primary bg-opacity-10 text-primary me-3 flex-shrink-0">
+                            <i class="bi bi-layers-fill"></i>
+                        </div>
+                        <div>
+                            <h5 class="fw-bold">Clean Architecture</h5>
+                            <p class="text-muted mb-0">Strict separation of concerns keeping Core domains independent of Infrastructure and UI.</p>
+                        </div>
+                    </div>
+                    <div class="d-flex">
+                        <div class="tech-icon bg-warning bg-opacity-10 text-warning me-3 flex-shrink-0">
+                            <i class="bi bi-diagram-3-fill"></i>
+                        </div>
+                        <div>
+                            <h5 class="fw-bold">CQRS & MediatR</h5>
+                            <p class="text-muted mb-0">Command Query Responsibility Segregation pattern implemented using MediatR library.</p>
+                        </div>
+                    </div>
+                     <div class="d-flex">
+                        <div class="tech-icon bg-info bg-opacity-10 text-info me-3 flex-shrink-0">
+                             <i class="bi bi-database-fill-gear"></i>
+                        </div>
+                        <div>
+                            <h5 class="fw-bold">EF Core 9</h5>
+                            <p class="text-muted mb-0">Latest Entity Framework Core with Code-First migrations and optimized querying.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 offset-lg-1">
+                 <div class="position-relative">
+                    <div class="code-editor bg-dark rounded-4 shadow-lg overflow-hidden border border-secondary border-opacity-25">
+                        <div class="d-flex align-items-center bg-black bg-opacity-50 px-3 py-2 border-bottom border-secondary border-opacity-25 opacity-75">
+                            <div class="d-flex gap-2 me-3">
+                                <div class="rounded-circle bg-danger" style="width:10px;height:10px"></div>
+                                <div class="rounded-circle bg-warning" style="width:10px;height:10px"></div>
+                                <div class="rounded-circle bg-success" style="width:10px;height:10px"></div>
+                            </div>
+                            <small class="text-white-50 font-monospace" style="font-size:0.8rem">Solution Explorer</small>
+                        </div>
+                        <div class="p-4 font-monospace text-light" style="font-size: 0.85rem; line-height: 1.8;">
+                            <div class="text-white"><i class="bi bi-box-seam me-2"></i>CommonArchitecture</div>
+                            <div class="ps-3 text-warning"><i class="bi bi-folder me-2"></i>Core <span class="text-secondary opacity-50 ms-2">// Domain Entities</span></div>
+                            <div class="ps-3 text-info"><i class="bi bi-folder me-2"></i>Infrastructure <span class="text-secondary opacity-50 ms-2">// DB Context</span></div>
+                            <div class="ps-3 text-success"><i class="bi bi-folder me-2"></i>Application <span class="text-secondary opacity-50 ms-2">// Use Cases</span></div>
+                              <div class="ps-3 text-primary"><i class="bi bi-folder me-2"></i>API <span class="text-secondary opacity-50 ms-2">// REST Controllers</span></div>
+                             <div class="ps-3 text-danger"><i class="bi bi-folder me-2"></i>Web <span class="text-secondary opacity-50 ms-2">// MVC UI</span></div>
+                        </div>
+                    </div>
+                    <!-- Decorative back blob -->
+                     <div class="position-absolute top-0 start-100 translate-middle bg-primary opacity-25 rounded-circle blur-3xl" style="width: 200px; height: 200px; z-index: -1;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 <style>
-    /* Styling Scoped to Landing Page */
-    .hero-section {
-        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-        padding: 8rem 0 10rem;
-        position: relative;
-        overflow: hidden;
-        clip-path: ellipse(150% 100% at 50% 0%); /* Adds a subtle curve at bottom if supported, else falls back to waves */
+    /* Hero Styles */
+    .hero-wrapper {
+        min-height: 100vh;
+        background-color: #0f172a;
+        padding-top: 80px; /* Navbar offset */
     }
     
-    .hero-subtitle {
-        max-width: 600px;
-        color: rgba(255,255,255,0.85);
-    }
-    
-    .hero-waves {
+    .hero-bg-shapes .shape {
         position: absolute;
-        bottom: -1px;
-        left: 0;
-        width: 100%;
-        line-height: 0;
+        filter: blur(80px);
+        opacity: 0.6;
+        z-index: 1;
+        animation: floatShape 20s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
     }
     
-    .icon-box {
-        width: 80px;
-        height: 80px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+    .shape-1 {
+        top: -10%;
+        left: -10%;
+        width: 50vw;
+        height: 50vw;
+        background: #4f46e5;
+        border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
     }
     
-    .hover-elevate {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    .shape-2 {
+        bottom: -20%;
+        right: -10%;
+        width: 40vw;
+        height: 40vw;
+        background: #06b6d4;
+         border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+         animation-delay: -5s;
     }
-    
-    .hover-elevate:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 1rem 3rem rgba(0,0,0,.1) !important;
-    }
-    
-    .tracking-wide {
-        letter-spacing: 0.1em;
-    }
-    
-    .architecture-visual .layer {
-        position: relative;
-        transition: transform 0.3s;
-    }
-    
-    .architecture-visual:hover .layer {
-        transform: scale(1.02);
+     
+    .shape-3 {
+        top: 30%;
+        left: 30%;
+        width: 30vw;
+        height: 30vw;
+        background: #7c3aed;
+        border-radius: 50%;
+        opacity: 0.4;
+        animation-delay: -10s;
     }
 
-    .icon-sm {
-        width: 40px;
-        height: 40px;
+    @@keyframes floatShape {
+        0% { transform: translate(0, 0) rotate(0deg); }
+        100% { transform: translate(100px, 50px) rotate(20deg); }
+    }
+    
+    .text-gradient-cyan {
+        background: linear-gradient(135deg, #67e8f9 0%, #2dd4bf 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    
+    .bg-gradient-cyan {
+         background: linear-gradient(90deg, #67e8f9 0%, #2dd4bf 100%);
+    }
+
+    /* Glass Cards */
+    .glass-card {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    }
+    
+    .hover-lift {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    
+    .hover-lift:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+    }
+
+    /* Animations */
+    .animate-float-slow {
+        animation: floatVertical 6s ease-in-out infinite;
+    }
+    
+    .animate-float-fast {
+        animation: floatVertical 4s ease-in-out infinite reverse;
+    }
+    
+    @@keyframes floatVertical {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-20px); }
+    }
+    
+    .hover-scale {
+         transition: transform 0.3s ease;
+    }
+    .hover-scale:hover {
+        transform: scale(1.02);
+    }
+    
+    .module-icon {
+        width: 80px;
+        height: 80px;
+    }
+     
+    .tech-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
         display: flex;
         align-items: center;
         justify-content: center;
+        font-size: 1.5rem;
     }
     
-    .code-window {
-        font-family: 'Consolas', 'Monaco', monospace;
+    .blur-3xl {
+        filter: blur(64px);
     }
     
-    /* Ensure container override works if Layout has one */
-    .container {
-        max-width: 1140px;
+    .leading-tight {
+        line-height: 1.1;
     }
 </style>

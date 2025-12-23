@@ -557,3 +557,4 @@ D:\My Archi\Core\src\CommonArchitecture.Web\obj\Debug\net9.0\CommonArchitecture.
 D:\My Archi\Core\src\CommonArchitecture.Web\obj\Debug\net9.0\CommonArchitecture.Web.genruntimeconfig.cache
 D:\My Archi\Core\src\CommonArchitecture.Web\obj\Debug\net9.0\ref\CommonArchitecture.Web.dll
 D:\My Archi\Core\src\CommonArchitecture.Web\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
+D:\My Archi\Core\src\CommonArchitecture.Web\obj\Debug\net9.0\compressed\m376gyt0vs-l1pw3ks9gp.gz

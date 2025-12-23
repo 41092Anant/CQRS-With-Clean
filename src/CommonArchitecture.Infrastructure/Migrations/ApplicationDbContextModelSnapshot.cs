@@ -67,6 +67,57 @@ namespace CommonArchitecture.Infrastructure.Migrations
                     b.ToTable("ErrorLogs");
                 });
 
+            modelBuilder.Entity("CommonArchitecture.Core.Entities.Menu", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
+
+                    b.Property<int>("DisplayOrder")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
+                    b.Property<string>("Icon")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<int?>("ParentMenuId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DisplayOrder");
+
+                    b.HasIndex("ParentMenuId");
+
+                    b.ToTable("Menus");
+                });
+
             modelBuilder.Entity("CommonArchitecture.Core.Entities.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -301,6 +352,16 @@ namespace CommonArchitecture.Infrastructure.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("CommonArchitecture.Core.Entities.Menu", b =>
+                {
+                    b.HasOne("CommonArchitecture.Core.Entities.Menu", "ParentMenu")
+                        .WithMany("SubMenus")
+                        .HasForeignKey("ParentMenuId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("ParentMenu");
+                });
+
             modelBuilder.Entity("CommonArchitecture.Core.Entities.RefreshToken", b =>
                 {
                     b.HasOne("CommonArchitecture.Core.Entities.User", "User")
@@ -321,6 +382,11 @@ namespace CommonArchitecture.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("CommonArchitecture.Core.Entities.Menu", b =>
+                {
+                    b.Navigation("SubMenus");
                 });
 #pragma warning restore 612, 618
         }
