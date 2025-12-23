@@ -41,7 +41,7 @@
                     <li class="nav-item">
                         <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Menus" ? "active" : "")" 
                            asp-area="Admin" asp-controller="Menus" asp-action="Index">
-                            <i class="bi bi-bars"></i>
+                            <i class="bi bi-list-ul"></i>
                             <span>Menus</span>
                         </a>
                     </li>
@@ -56,6 +56,13 @@
                                asp-area="Admin" asp-controller="Roles" asp-action="Index">
                                 <i class="bi bi-shield-check"></i>
                                 <span>Roles</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "RoleMenus" ? "active" : "")" 
+                               asp-area="Admin" asp-controller="RoleMenus" asp-action="Index">
+                                <i class="bi bi-key-fill"></i>
+                                <span>Role Permissions</span>
                             </a>
                         </li>
                         <li class="nav-item">

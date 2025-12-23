@@ -13,7 +13,8 @@ public class ApplicationDbContext : DbContext
     public DbSet<Role> Roles { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<RefreshToken> RefreshTokens { get; set; }
-    public DbSet<Menu> Menus { get; set; } // Added Menu DbSet
+    public DbSet<Menu> Menus { get; set; }
+    public DbSet<RoleMenu> RoleMenus { get; set; }
 
     // Logging tables
     public DbSet<ErrorLog> ErrorLogs { get; set; }
@@ -98,6 +99,25 @@ public class ApplicationDbContext : DbContext
                 .WithMany(m => m.SubMenus)
                 .HasForeignKey(m => m.ParentMenuId)
                 .OnDelete(DeleteBehavior.NoAction);
+        });
+
+        // Configure RoleMenu entity
+        modelBuilder.Entity<RoleMenu>(entity =>
+        {
+            entity.HasKey(rm => rm.Id);
+            entity.Property(rm => rm.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
+            entity.HasIndex(rm => new { rm.RoleId, rm.MenuId }).IsUnique();
+
+            // Configure relationships
+            entity.HasOne(rm => rm.Role)
+                .WithMany()
+                .HasForeignKey(rm => rm.RoleId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasOne(rm => rm.Menu)
+                .WithMany()
+                .HasForeignKey(rm => rm.MenuId)
+                .OnDelete(DeleteBehavior.Cascade);
         });
 
         // Configure ErrorLog

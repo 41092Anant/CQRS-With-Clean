@@ -456,6 +456,53 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "CommonArchitecture.API.Controllers.RoleMenusController",
+    "Method": "GetByRole",
+    "RelativePath": "api/RoleMenus/role/{roleId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "roleId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "CommonArchitecture.Application.DTOs.RoleMenuPermissionsDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "CommonArchitecture.API.Controllers.RoleMenusController",
+    "Method": "UpdateRolePermissions",
+    "RelativePath": "api/RoleMenus/role/{roleId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "roleId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "menuPermissions",
+        "Type": "System.Collections.Generic.List\u00601[[CommonArchitecture.Application.DTOs.RoleMenuItemDto, CommonArchitecture.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "CommonArchitecture.API.Controllers.RolesController",
     "Method": "GetAll",
     "RelativePath": "api/Roles",
