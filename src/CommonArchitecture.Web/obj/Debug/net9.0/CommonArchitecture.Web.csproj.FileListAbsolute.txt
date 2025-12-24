@@ -476,6 +476,7 @@ D:\My Archi\Core\src\CommonArchitecture.Web\obj\Debug\net9.0\compressed\98bbbbtg
 D:\My Archi\Core\src\CommonArchitecture.Web\obj\Debug\net9.0\compressed\ybyspf7kce-k73i5o357z.gz
 D:\My Archi\Core\src\CommonArchitecture.Web\obj\Debug\net9.0\compressed\qxirngjazl-b9sayid5wm.gz
 D:\My Archi\Core\src\CommonArchitecture.Web\obj\Debug\net9.0\compressed\zb5q1yx3do-61n19gt1b8.gz
+D:\My Archi\Core\src\CommonArchitecture.Web\obj\Debug\net9.0\compressed\m376gyt0vs-l1pw3ks9gp.gz
 D:\My Archi\Core\src\CommonArchitecture.Web\obj\Debug\net9.0\compressed\0ysipc6iqu-h45bw621up.gz
 D:\My Archi\Core\src\CommonArchitecture.Web\obj\Debug\net9.0\compressed\w208sfhzgp-fpc129em79.gz
 D:\My Archi\Core\src\CommonArchitecture.Web\obj\Debug\net9.0\compressed\nyybqv6bjq-5ipfcylp73.gz
@@ -550,11 +551,10 @@ D:\My Archi\Core\src\CommonArchitecture.Web\obj\Debug\net9.0\staticwebassets.bui
 D:\My Archi\Core\src\CommonArchitecture.Web\obj\Debug\net9.0\staticwebassets.build.json.cache
 D:\My Archi\Core\src\CommonArchitecture.Web\obj\Debug\net9.0\staticwebassets.development.json
 D:\My Archi\Core\src\CommonArchitecture.Web\obj\Debug\net9.0\staticwebassets.build.endpoints.json
+D:\My Archi\Core\src\CommonArchitecture.Web\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
 D:\My Archi\Core\src\CommonArchitecture.Web\obj\Debug\net9.0\CommonAr.DF18FA81.Up2Date
 D:\My Archi\Core\src\CommonArchitecture.Web\obj\Debug\net9.0\CommonArchitecture.Web.dll
 D:\My Archi\Core\src\CommonArchitecture.Web\obj\Debug\net9.0\refint\CommonArchitecture.Web.dll
 D:\My Archi\Core\src\CommonArchitecture.Web\obj\Debug\net9.0\CommonArchitecture.Web.pdb
 D:\My Archi\Core\src\CommonArchitecture.Web\obj\Debug\net9.0\CommonArchitecture.Web.genruntimeconfig.cache
 D:\My Archi\Core\src\CommonArchitecture.Web\obj\Debug\net9.0\ref\CommonArchitecture.Web.dll
-D:\My Archi\Core\src\CommonArchitecture.Web\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
-D:\My Archi\Core\src\CommonArchitecture.Web\obj\Debug\net9.0\compressed\m376gyt0vs-l1pw3ks9gp.gz

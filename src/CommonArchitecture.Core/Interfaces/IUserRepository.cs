@@ -1,4 +1,5 @@
 using CommonArchitecture.Core.Entities;
+using CommonArchitecture.Core.DTOs;
 
 namespace CommonArchitecture.Core.Interfaces;
 
@@ -11,5 +12,6 @@ public interface IUserRepository
     Task DeleteAsync(int id);
     Task<IEnumerable<User>> GetPagedAsync(string? searchTerm, string sortBy, string sortOrder, int pageNumber, int pageSize);
     Task<int> GetTotalCountAsync(string? searchTerm);
+    Task<List<DailyStatDto>> GetDailyRegistrationsAsync(DateTime from, DateTime to);
 }
 

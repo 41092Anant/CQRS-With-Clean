@@ -1,4 +1,5 @@
 using CommonArchitecture.Core.Entities;
+using CommonArchitecture.Core.DTOs;
 
 namespace CommonArchitecture.Core.Interfaces;
 
@@ -20,4 +21,6 @@ public interface ILoggingService
         string? method = null);
         
     Task<RequestResponseLog?> GetLogByIdAsync(int id);
+    
+    Task<(List<DailyStatDto> DailyStats, StatusDistributionDto StatusDistribution, double AvgDuration)> GetDashboardStatsAsync(DateTime from, DateTime to);
 }

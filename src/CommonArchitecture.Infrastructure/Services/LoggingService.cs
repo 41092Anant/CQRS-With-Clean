@@ -1,5 +1,9 @@
 using CommonArchitecture.Core.Entities;
 using CommonArchitecture.Core.Interfaces;
+using CommonArchitecture.Core.Interfaces;
+using CommonArchitecture.Infrastructure.Persistence;
+using CommonArchitecture.Core.DTOs;
+using Microsoft.EntityFrameworkCore;
 using CommonArchitecture.Infrastructure.Persistence;
 
 namespace CommonArchitecture.Infrastructure.Services;
@@ -90,5 +94,39 @@ public class LoggingService : ILoggingService
     public async Task<RequestResponseLog?> GetLogByIdAsync(int id)
     {
         return await _db.RequestResponseLogs.FindAsync(id);
+    }
+
+    public async Task<(List<DailyStatDto> DailyStats, StatusDistributionDto StatusDistribution, double AvgDuration)> GetDashboardStatsAsync(DateTime from, DateTime to)
+    {
+        var logs = _db.RequestResponseLogs
+            .Where(l => l.CreatedAt >= from && l.CreatedAt <= to);
+
+        // Group by Date for API Calls
+        var dailyStats = await logs
+            .GroupBy(l => l.CreatedAt.Date)
+            .Select(g => new DailyStatDto
+            {
+                Date = g.Key,
+                Count = g.Count(),
+                AverageDuration = g.Average(l => l.DurationMs)
+            })
+            .OrderBy(s => s.Date)
+            .ToListAsync();
+
+        var statusDist = await logs
+            .GroupBy(l => 1)
+            .Select(g => new StatusDistributionDto
+            {
+                Success = g.Count(l => l.ResponseStatusCode >= 200 && l.ResponseStatusCode < 300),
+                ClientError = g.Count(l => l.ResponseStatusCode >= 400 && l.ResponseStatusCode < 500),
+                ServerError = g.Count(l => l.ResponseStatusCode >= 500)
+            })
+            .FirstOrDefaultAsync() ?? new StatusDistributionDto();
+
+        var avgDuration = await logs.AnyAsync() 
+            ? await logs.AverageAsync(l => l.DurationMs) 
+            : 0;
+
+        return (dailyStats, statusDist, avgDuration);
     }
 }

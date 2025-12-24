@@ -96,11 +96,21 @@ builder.Services.AddHttpClient<IRoleMenuApiService, RoleMenuApiService>(client =
 })
 .AddHttpMessageHandler<RefreshTokenHandler>();
 
+builder.Services.AddHttpClient<IDashboardApiService, DashboardApiService>(client =>
+{
+ client.BaseAddress = new Uri(builder.Configuration["ApiSettings:BaseUrl"] ?? "http://localhost:5089");
+ client.DefaultRequestHeaders.Add("Accept", "application/json");
+})
+.AddHttpMessageHandler<RefreshTokenHandler>();
+
 // Register JwtTokenHandler (kept for compatibility if used elsewhere)
 builder.Services.AddTransient<CommonArchitecture.Web.Services.JwtTokenHandler>();
 
 // Register Logging service
 builder.Services.AddScoped<ILoggingService, LoggingService>();
+
+// Register DbSeeder
+builder.Services.AddScoped<DbSeeder>();
 
 // Register FluentValidation
 builder.Services.AddValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
@@ -156,5 +166,12 @@ app.MapControllerRoute(
  name: "default",
  pattern: "{controller=Home}/{action=Index}/{id?}")
  .WithStaticAssets();
+
+// Seed Database
+using (var scope = app.Services.CreateScope())
+{
+    var seeder = scope.ServiceProvider.GetRequiredService<DbSeeder>();
+    await seeder.SeedAsync();
+}
 
 app.Run();

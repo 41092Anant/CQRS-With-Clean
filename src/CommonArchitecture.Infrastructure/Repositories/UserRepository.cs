@@ -1,7 +1,10 @@
 using CommonArchitecture.Core.Entities;
 using CommonArchitecture.Core.Interfaces;
 using CommonArchitecture.Infrastructure.Persistence;
+using CommonArchitecture.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Dynamic.Core;
+using CommonArchitecture.Core.DTOs;
 using System.Linq.Dynamic.Core;
 
 namespace CommonArchitecture.Infrastructure.Repositories;
@@ -141,6 +144,20 @@ public class UserRepository : IUserRepository
         var orderByExpression = $"{sortBy} {(isDescending ? "descending" : "ascending")}";
         
         return query.OrderBy(orderByExpression);
+    }
+
+    public async Task<List<DailyStatDto>> GetDailyRegistrationsAsync(DateTime from, DateTime to)
+    {
+        return await _context.Users
+            .Where(u => u.CreatedAt >= from && u.CreatedAt <= to)
+            .GroupBy(u => u.CreatedAt.Date)
+            .Select(g => new DailyStatDto
+            {
+                Date = g.Key,
+                Count = g.Count()
+            })
+            .OrderBy(s => s.Date)
+            .ToListAsync();
     }
 }
 

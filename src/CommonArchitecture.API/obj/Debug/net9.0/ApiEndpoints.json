@@ -94,6 +94,16 @@
     ]
   },
   {
+    "ContainingType": "CommonArchitecture.API.Controllers.DashboardController",
+    "Method": "GetStats",
+    "RelativePath": "api/Dashboard/stats",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "CommonArchitecture.API.Controllers.LogsController",
     "Method": "GetAll",
     "RelativePath": "api/Logs",
