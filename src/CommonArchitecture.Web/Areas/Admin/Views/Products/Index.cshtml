@@ -10,9 +10,17 @@
             <h1 class="fw-bold text-dark mb-1">Product Inventory</h1>
             <p class="text-muted mb-0">Manage catalog, pricing, and stock levels</p>
         </div>
-        <button class="btn btn-primary rounded-pill px-4 shadow-sm" id="btnCreateProduct">
-            <i class="fas fa-plus me-2"></i> Add Product
-        </button>
+        <div class="d-flex gap-2">
+            <a href="/Admin/Products/Export" class="btn btn-outline-success rounded-pill px-4 shadow-sm">
+                <i class="fas fa-file-export me-2"></i> Export
+            </a>
+            <button class="btn btn-outline-primary rounded-pill px-4 shadow-sm" data-bs-toggle="modal" data-bs-target="#importModal">
+                <i class="fas fa-file-import me-2"></i> Import
+            </button>
+            <button class="btn btn-primary rounded-pill px-4 shadow-sm" id="btnCreateProduct">
+                <i class="fas fa-plus me-2"></i> Add Product
+            </button>
+        </div>
     </div>
 
     <!-- Summary Cards -->
@@ -227,6 +235,43 @@
     </div>
 </div>
 
+<!-- Import Modal -->
+<div class="modal fade" id="importModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 rounded-4 shadow-lg overflow-hidden">
+             <div class="modal-header border-bottom-0 bg-primary text-white p-4">
+                <div>
+                     <h5 class="modal-title fw-bold" id="importModalLabel">Import Products</h5>
+                     <p class="mb-0 text-white-50 small">Upload CSV to bulk create products</p>
+                </div>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="importForm" enctype="multipart/form-data">
+                <div class="modal-body p-5">
+                    <div class="mb-4 text-center">
+                        <i class="fas fa-file-csv text-success mb-3" style="font-size: 3rem;"></i>
+                        <p class="text-muted">Select a CSV file containing product data.<br>Columns: Name, Description, Price, Stock</p>
+                        <a href="/Admin/Products/DownloadTemplate" class="btn btn-sm btn-outline-info rounded-pill px-3">
+                            <i class="fas fa-download me-1"></i> Download Format Template
+                        </a>
+                    </div>
+                    
+                    <div class="mb-3">
+                         <input class="form-control form-control-lg bg-light border-0" type="file" id="importFile" name="file" accept=".csv" required>
+                    </div>
+                </div>
+                <div class="modal-footer border-top-0 bg-light">
+                    <button type="button" class="btn btn-light border rounded-pill px-4 fw-bold" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary rounded-pill px-4 fw-bold" id="btnImport">
+                         <span class="spinner-border spinner-border-sm d-none me-2" id="importSpinner"></span>
+                        <span id="importButtonText">Import Products</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <style>
     /* Shared Premium Styles */
     body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
@@ -314,6 +359,51 @@
                 $('#statTotalProducts').text(products.length);
                 $('#statLowStock').text(products.filter(p => p.stock < 10).length);
              };
+
+             // Import Logic
+             $('#importForm').on('submit', function(e) {
+                 e.preventDefault();
+                 
+                 var formData = new FormData();
+                 var fileInput = $('#importFile')[0];
+                 
+                 if(fileInput.files.length === 0){
+                     alert("Please select a file");
+                     return;
+                 }
+                 
+                 formData.append('file', fileInput.files[0]);
+                 
+                 $('#btnImport').prop('disabled', true);
+                 $('#importSpinner').removeClass('d-none');
+                 $('#importButtonText').text('Importing...');
+                 
+                 $.ajax({
+                     url: '/Admin/Products/Import',
+                     type: 'POST',
+                     data: formData,
+                     processData: false,
+                     contentType: false,
+                     success: function(response) {
+                         if(response.success) {
+                             $('#importModal').modal('hide');
+                             $('#importForm')[0].reset();
+                             // Refresh table
+                             loadProducts(); 
+                         } else {
+                             alert(response.message || "Import failed");
+                         }
+                     },
+                     error: function() {
+                         alert("An error occurred during import.");
+                     },
+                     complete: function() {
+                         $('#btnImport').prop('disabled', false);
+                         $('#importSpinner').addClass('d-none');
+                         $('#importButtonText').text('Import Products');
+                     }
+                 });
+             });
         });
     </script>
 }

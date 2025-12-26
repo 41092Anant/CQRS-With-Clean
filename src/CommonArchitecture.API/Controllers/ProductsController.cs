@@ -4,6 +4,8 @@ using CommonArchitecture.Application.Commands.Products.UpdateProduct;
 using CommonArchitecture.Application.DTOs;
 using CommonArchitecture.Application.Queries.Products.GetAllProducts;
 using CommonArchitecture.Application.Queries.Products.GetProductById;
+using CommonArchitecture.Application.Queries.Products.ExportProducts;
+using CommonArchitecture.Application.Commands.Products.ImportProducts;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -88,5 +90,30 @@ public class ProductsController : ControllerBase
             return NotFound();
 
         return NoContent();
+    }
+    [HttpGet("export")]
+    [Authorize]
+    public async Task<IActionResult> Export()
+    {
+        var query = new ExportProductsQuery();
+        var fileContent = await _mediator.Send(query);
+        return File(fileContent, "text/csv", $"products_{DateTime.UtcNow:yyyyMMddHHmm}.csv");
+    }
+
+    [HttpPost("import")]
+    [Authorize]
+    public async Task<IActionResult> Import(IFormFile file)
+    {
+        if (file == null || file.Length == 0)
+            return BadRequest("File is empty");
+
+        using var stream = file.OpenReadStream();
+        var command = new ImportProductsCommand(stream);
+        var result = await _mediator.Send(command);
+        
+        if (!result)
+            return BadRequest("Failed to import products. Ensure the file is a valid CSV.");
+
+        return Ok(new { Count = "Batch Processed" });
     }
 }

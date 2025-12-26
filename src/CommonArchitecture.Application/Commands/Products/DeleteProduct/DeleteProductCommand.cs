@@ -1,5 +1,9 @@
+using CommonArchitecture.Application.Commands;
 using MediatR;
 
 namespace CommonArchitecture.Application.Commands.Products.DeleteProduct;
 
-public record DeleteProductCommand(int Id) : IRequest<bool>;
+public record DeleteProductCommand(int Id) : IRequest<bool>, ICacheInvalidator
+{
+    public string[] CacheKeys => new[] { "Products_" };
+}

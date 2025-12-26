@@ -11,6 +11,8 @@ using Scalar.AspNetCore;
 using System.Threading.RateLimiting;
 using System.Text;
 using CommonArchitecture.Infrastructure.Services;
+using CommonArchitecture.Application.Behaviors;
+using MediatR;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +26,7 @@ if (builder.Environment.IsDevelopment())
 builder.Configuration.AddEnvironmentVariables();
 
 // Add services to the container.
+builder.Services.AddMemoryCache();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -110,7 +113,11 @@ builder.Services.AddCors(options =>
 
 // Register MediatR for CQRS pattern
 builder.Services.AddMediatR(cfg => 
-    cfg.RegisterServicesFromAssembly(typeof(CommonArchitecture.Application.Commands.Products.CreateProduct.CreateProductCommand).Assembly));
+{
+    cfg.RegisterServicesFromAssembly(typeof(CommonArchitecture.Application.Commands.Products.CreateProduct.CreateProductCommand).Assembly);
+    cfg.AddOpenBehavior(typeof(CachingBehavior<,>));
+    cfg.AddOpenBehavior(typeof(CacheInvalidationBehavior<,>));
+});
 
 // Add Controllers
 builder.Services.AddControllers()

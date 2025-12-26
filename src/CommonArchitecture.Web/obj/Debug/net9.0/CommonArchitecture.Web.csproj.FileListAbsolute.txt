@@ -308,6 +308,7 @@ D:\My Archi\Core\src\CommonArchitecture.Web\bin\Debug\net9.0\refs\System.Xml.XPa
 D:\My Archi\Core\src\CommonArchitecture.Web\bin\Debug\net9.0\refs\WindowsBase.dll
 D:\My Archi\Core\src\CommonArchitecture.Web\bin\Debug\net9.0\Azure.Core.dll
 D:\My Archi\Core\src\CommonArchitecture.Web\bin\Debug\net9.0\Azure.Identity.dll
+D:\My Archi\Core\src\CommonArchitecture.Web\bin\Debug\net9.0\CsvHelper.dll
 D:\My Archi\Core\src\CommonArchitecture.Web\bin\Debug\net9.0\FluentValidation.dll
 D:\My Archi\Core\src\CommonArchitecture.Web\bin\Debug\net9.0\FluentValidation.AspNetCore.dll
 D:\My Archi\Core\src\CommonArchitecture.Web\bin\Debug\net9.0\FluentValidation.DependencyInjectionExtensions.dll

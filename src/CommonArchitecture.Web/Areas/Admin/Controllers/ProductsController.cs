@@ -180,5 +180,45 @@ public class ProductsController : Controller
             return Json(new { success = false, message = "An error occurred while deleting the product. Please try again." });
         }
     }
+    [HttpGet]
+    public async Task<IActionResult> Export()
+    {
+        var fileContent = await _productApiService.ExportAsync();
+        if (fileContent.Length == 0)
+        {
+             _toastNotification.AddErrorToastMessage("Export failed.");
+             return RedirectToAction("Index");
+        }
+        return File(fileContent, "text/csv", $"products_{DateTime.UtcNow:yyyyMMddHHmm}.csv");
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Import(IFormFile file)
+    {
+        if (file == null || file.Length == 0)
+        {
+             return Json(new { success = false, message = "Please select a file." });
+        }
+
+        var success = await _productApiService.ImportAsync(file);
+        if (success)
+        {
+             _toastNotification.AddSuccessToastMessage("Products imported successfully.");
+             return Json(new { success = true });
+        }
+        else
+        {
+             return Json(new { success = false, message = "Import failed. Use valid CSV format." });
+        }
+    }
+
+    // GET: Admin/Products/DownloadTemplate
+    [HttpGet]
+    public IActionResult DownloadTemplate()
+    {
+        var csvHeader = "Name,Description,Price,Stock\n";
+        var fileContent = System.Text.Encoding.UTF8.GetBytes(csvHeader);
+        return File(fileContent, "text/csv", "product_import_template.csv");
+    }
 }
 

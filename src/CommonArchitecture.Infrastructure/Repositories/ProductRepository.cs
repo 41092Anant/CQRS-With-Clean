@@ -96,6 +96,12 @@ public class ProductRepository : IProductRepository
         return await query.CountAsync();
     }
 
+    public async Task BulkAddAsync(IEnumerable<Product> products)
+    {
+        await _context.Products.AddRangeAsync(products);
+        await _context.SaveChangesAsync();
+    }
+
     /// <summary>
     /// Applies search filter to the query.
     /// Uses database collation (CI_AS in SQL Server) for case-insensitive search.

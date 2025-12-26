@@ -1,3 +1,4 @@
+using CommonArchitecture.Application.Commands;
 using MediatR;
 
 namespace CommonArchitecture.Application.Commands.Products.UpdateProduct;
@@ -8,4 +9,7 @@ public record UpdateProductCommand(
     string Description,
     decimal Price,
     int Stock
-) : IRequest<bool>;
+) : IRequest<bool>, ICacheInvalidator
+{
+    public string[] CacheKeys => new[] { "Products_" };
+}

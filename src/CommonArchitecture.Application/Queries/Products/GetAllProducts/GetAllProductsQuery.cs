@@ -1,6 +1,11 @@
 using CommonArchitecture.Application.DTOs;
+using CommonArchitecture.Application.Queries;
 using MediatR;
 
 namespace CommonArchitecture.Application.Queries.Products.GetAllProducts;
 
-public record GetAllProductsQuery(ProductQueryParameters Parameters) : IRequest<PaginatedResult<ProductDto>>;
+public record GetAllProductsQuery(ProductQueryParameters Parameters) : IRequest<PaginatedResult<ProductDto>>, ICacheableQuery
+{
+    public string CacheKey => $"Products_{Parameters.PageNumber}_{Parameters.PageSize}_{Parameters.SearchTerm}_{Parameters.SortBy}_{Parameters.SortOrder}";
+    public TimeSpan? SlidingExpiration => TimeSpan.FromMinutes(10);
+}

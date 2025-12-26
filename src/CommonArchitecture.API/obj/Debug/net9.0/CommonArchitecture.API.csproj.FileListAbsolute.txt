@@ -9,6 +9,7 @@ D:\My Archi\Core\src\CommonArchitecture.API\bin\Debug\net9.0\CommonArchitecture.
 D:\My Archi\Core\src\CommonArchitecture.API\bin\Debug\net9.0\CommonArchitecture.API.pdb
 D:\My Archi\Core\src\CommonArchitecture.API\bin\Debug\net9.0\Azure.Core.dll
 D:\My Archi\Core\src\CommonArchitecture.API\bin\Debug\net9.0\Azure.Identity.dll
+D:\My Archi\Core\src\CommonArchitecture.API\bin\Debug\net9.0\CsvHelper.dll
 D:\My Archi\Core\src\CommonArchitecture.API\bin\Debug\net9.0\Humanizer.dll
 D:\My Archi\Core\src\CommonArchitecture.API\bin\Debug\net9.0\MediatR.dll
 D:\My Archi\Core\src\CommonArchitecture.API\bin\Debug\net9.0\MediatR.Contracts.dll

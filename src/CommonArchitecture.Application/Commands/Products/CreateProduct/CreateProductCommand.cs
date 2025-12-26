@@ -1,3 +1,4 @@
+using CommonArchitecture.Application.Commands;
 using CommonArchitecture.Application.DTOs;
 using MediatR;
 
@@ -8,4 +9,7 @@ public record CreateProductCommand(
     string Description,
     decimal Price,
     int Stock
-) : IRequest<ProductDto>;
+) : IRequest<ProductDto>, ICacheInvalidator
+{
+    public string[] CacheKeys => new[] { "Products_" }; // We use a prefix approach or just "Products_" for simplicity
+}

@@ -1,0 +1,5 @@
+using MediatR;
+
+namespace CommonArchitecture.Application.Commands.Products.ImportProducts;
+
+public record ImportProductsCommand(Stream FileStream) : IRequest<bool>;

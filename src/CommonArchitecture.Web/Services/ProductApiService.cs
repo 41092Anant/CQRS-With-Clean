@@ -1,5 +1,7 @@
 using CommonArchitecture.Application.DTOs;
 using System.Net.Http.Json;
+using Microsoft.AspNetCore.Http;
+using System.Net.Http.Headers;
 
 namespace CommonArchitecture.Web.Services;
 
@@ -158,6 +160,49 @@ public class ProductApiService : IProductApiService
   {
  _logger.LogError(ex, "Error deleting product {ProductId} via API. Exception: {ExceptionMessage}", id, ex.Message);
          return false;
+        }
+    }
+    public async Task<byte[]> ExportAsync()
+    {
+        try
+        {
+            var response = await _httpClient.GetAsync("api/products/export");
+            response.EnsureSuccessStatusCode();
+            return await response.Content.ReadAsByteArrayAsync();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error exporting products");
+            return Array.Empty<byte>();
+        }
+    }
+
+    public async Task<bool> ImportAsync(IFormFile file)
+    {
+        try
+        {
+            using var content = new MultipartFormDataContent();
+            using var fileStream = file.OpenReadStream();
+            using var streamContent = new StreamContent(fileStream);
+            
+            streamContent.Headers.ContentType = new MediaTypeHeaderValue(file.ContentType);
+            content.Add(streamContent, "file", file.FileName);
+
+            var response = await _httpClient.PostAsync("api/products/import", content);
+            
+            if (!response.IsSuccessStatusCode)
+            {
+                var error = await response.Content.ReadAsStringAsync();
+                _logger.LogError("Import failed: {Error}", error);
+                return false;
+            }
+
+            return true;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error importing products");
+            return false;
         }
     }
 }

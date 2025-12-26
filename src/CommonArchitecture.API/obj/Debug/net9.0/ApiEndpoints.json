@@ -466,6 +466,32 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "CommonArchitecture.API.Controllers.ProductsController",
+    "Method": "Export",
+    "RelativePath": "api/Products/export",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CommonArchitecture.API.Controllers.ProductsController",
+    "Method": "Import",
+    "RelativePath": "api/Products/import",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "file",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "CommonArchitecture.API.Controllers.RoleMenusController",
     "Method": "GetByRole",
     "RelativePath": "api/RoleMenus/role/{roleId}",

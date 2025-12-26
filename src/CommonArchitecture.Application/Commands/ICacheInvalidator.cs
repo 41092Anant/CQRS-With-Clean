@@ -1,0 +1,6 @@
+namespace CommonArchitecture.Application.Commands;
+
+public interface ICacheInvalidator
+{
+    string[] CacheKeys { get; }
+}
