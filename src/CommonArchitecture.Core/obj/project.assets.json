@@ -75,5 +75,13 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.306/PortableRuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file D:\\My Archi\\Core\\src\\CommonArchitecture.Core\\obj\\project.nuget.cache : '0x00' is an invalid start of a value. Path: $ | LineNumber: 0 | BytePositionInLine: 0."
+    }
+  ]
 }

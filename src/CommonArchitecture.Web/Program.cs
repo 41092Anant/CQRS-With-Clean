@@ -8,6 +8,9 @@ using CommonArchitecture.Web.Handlers;
 using CommonArchitecture.Core.Interfaces;
 using CommonArchitecture.Infrastructure.Services;
 using CommonArchitecture.Web.Middlewares;
+using Hangfire;
+using Hangfire.SqlServer;
+using Hangfire.Dashboard;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -109,6 +112,20 @@ builder.Services.AddTransient<CommonArchitecture.Web.Services.JwtTokenHandler>()
 // Register Logging service
 builder.Services.AddScoped<ILoggingService, LoggingService>();
 
+// Configure Hangfire (same database as API - for dashboard access)
+builder.Services.AddHangfire(configuration => configuration
+    .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
+    .UseSimpleAssemblyNameTypeSerializer()
+    .UseRecommendedSerializerSettings()
+    .UseSqlServerStorage(builder.Configuration.GetConnectionString("DefaultConnection"), new SqlServerStorageOptions
+    {
+        CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+        SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+        QueuePollInterval = TimeSpan.Zero,
+        UseRecommendedIsolationLevel = true,
+        DisableGlobalLocks = true
+    }));
+
 // Register DbSeeder
 builder.Services.AddScoped<DbSeeder>();
 
@@ -155,6 +172,13 @@ app.UseAuthorization();
 app.UseNToastNotify();
 
 app.MapStaticAssets();
+
+// Configure Hangfire Dashboard (Admin only - requires authentication)
+app.MapHangfireDashboard("/Admin/Hangfire", new DashboardOptions
+{
+    DashboardTitle = "Hangfire Jobs Dashboard",
+    Authorization = new[] { new CommonArchitecture.Web.Filters.HangfireAuthorizationFilter() }
+});
 
 // Area routing (must be before default route)
 app.MapControllerRoute(

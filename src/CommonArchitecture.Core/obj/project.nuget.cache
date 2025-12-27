@@ -4,5 +4,15 @@
   "success": true,
   "projectFilePath": "D:\\My Archi\\Core\\src\\CommonArchitecture.Core\\CommonArchitecture.Core.csproj",
   "expectedPackageFiles": [],
-  "logs": []
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "message": "Problem reading the cache file D:\\My Archi\\Core\\src\\CommonArchitecture.Core\\obj\\project.nuget.cache : '0x00' is an invalid start of a value. Path: $ | LineNumber: 0 | BytePositionInLine: 0.",
+      "projectPath": "D:\\My Archi\\Core\\src\\CommonArchitecture.Core\\CommonArchitecture.Core.csproj",
+      "warningLevel": 1,
+      "filePath": "D:\\My Archi\\Core\\src\\CommonArchitecture.Core\\CommonArchitecture.Core.csproj",
+      "targetGraphs": []
+    }
+  ]
 }

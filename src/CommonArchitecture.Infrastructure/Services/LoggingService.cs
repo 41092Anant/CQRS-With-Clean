@@ -40,7 +40,7 @@ public class LoggingService : ILoggingService
         int? statusCode = null,
         string? method = null)
     {
-        var query = _db.RequestResponseLogs.AsQueryable();
+        var query = _db.RequestResponseLogs.AsNoTracking().AsQueryable();
 
         // Filtering
         if (!string.IsNullOrWhiteSpace(searchTerm))

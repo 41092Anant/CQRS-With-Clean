@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "NLUsLynpNs8=",
+  "dgSpecHash": "eiVhixwmSEE=",
   "success": true,
   "projectFilePath": "D:\\My Archi\\Core\\src\\CommonArchitecture.Web\\CommonArchitecture.Web.csproj",
   "expectedPackageFiles": [
@@ -10,6 +10,10 @@
     "C:\\Users\\Admin\\.nuget\\packages\\fluentvalidation\\11.11.0\\fluentvalidation.11.11.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\fluentvalidation.aspnetcore\\11.3.1\\fluentvalidation.aspnetcore.11.3.1.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\11.11.0\\fluentvalidation.dependencyinjectionextensions.11.11.0.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\hangfire.aspnetcore\\1.8.17\\hangfire.aspnetcore.1.8.17.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\hangfire.core\\1.8.17\\hangfire.core.1.8.17.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\hangfire.netcore\\1.8.17\\hangfire.netcore.1.8.17.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\hangfire.sqlserver\\1.8.17\\hangfire.sqlserver.1.8.17.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\mediatr\\14.0.0\\mediatr.14.0.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\mediatr.contracts\\2.0.1\\mediatr.contracts.2.0.1.nupkg.sha512",
@@ -70,7 +74,7 @@
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.extensions.dependencymodel\\9.0.0\\microsoft.extensions.dependencymodel.9.0.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.extensions.fileproviders.abstractions\\6.0.0\\microsoft.extensions.fileproviders.abstractions.6.0.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.extensions.fileproviders.embedded\\6.0.0\\microsoft.extensions.fileproviders.embedded.6.0.0.nupkg.sha512",
-    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.extensions.hosting.abstractions\\2.2.0\\microsoft.extensions.hosting.abstractions.2.2.0.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.extensions.hosting.abstractions\\3.0.0\\microsoft.extensions.hosting.abstractions.3.0.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.extensions.localization\\2.2.0\\microsoft.extensions.localization.2.2.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.extensions.localization.abstractions\\2.2.0\\microsoft.extensions.localization.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.extensions.logging\\9.0.0\\microsoft.extensions.logging.9.0.0.nupkg.sha512",

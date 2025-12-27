@@ -271,6 +271,12 @@ namespace CommonArchitecture.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreatedAt");
+
+                    b.HasIndex("Method");
+
+                    b.HasIndex("ResponseStatusCode");
+
                     b.ToTable("RequestResponseLogs");
                 });
 

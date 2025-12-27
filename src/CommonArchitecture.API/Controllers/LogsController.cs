@@ -37,9 +37,11 @@ public class LogsController : ControllerBase
             Method = l.Method,
             Path = l.Path,
             QueryString = l.QueryString,
-            RequestBody = l.RequestBody,
+            // Optimization: Exclude large JSON payloads from the list view to reduce latency/bandwidth.
+            // These are still available via the GetById endpoint for the details modal.
+            RequestBody = null, 
             ResponseStatusCode = l.ResponseStatusCode,
-            ResponseBody = l.ResponseBody,
+            ResponseBody = null,
             DurationMs = l.DurationMs,
             IpAddress = l.IpAddress,
             UserAgent = l.UserAgent,

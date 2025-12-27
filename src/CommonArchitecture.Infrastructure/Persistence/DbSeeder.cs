@@ -43,7 +43,8 @@ public class DbSeeder
             new() { Name = "Role Master", Url = "/Admin/Roles", Icon = "bi bi-shield-lock", DisplayOrder = 3 },
             new() { Name = "User Master", Url = "/Admin/Users", Icon = "bi bi-people", DisplayOrder = 4 },
             new() { Name = "Menu Master", Url = "/Admin/Menus", Icon = "bi bi-list", DisplayOrder = 5 },
-            new() { Name = "Role Permission", Url = "/Admin/RoleMenus", Icon = "bi bi-gear", DisplayOrder = 6 }
+            new() { Name = "Role Permission", Url = "/Admin/RoleMenus", Icon = "bi bi-gear", DisplayOrder = 6 },
+            new() { Name = "Hangfire Jobs", Url = "/Admin/HangfireJobs", Icon = "bi bi-clock-history", DisplayOrder = 7 }
         };
 
         foreach (var menu in defaultMenus)

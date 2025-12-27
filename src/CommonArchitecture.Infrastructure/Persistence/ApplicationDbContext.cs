@@ -146,6 +146,11 @@ public class ApplicationDbContext : DbContext
             entity.Property(r => r.UserAgent).HasMaxLength(1000);
             entity.Property(r => r.UserId).HasMaxLength(128);
             entity.Property(r => r.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
+            
+            // Optimization: Add index for sorting/filtering
+            entity.HasIndex(r => r.CreatedAt);
+            entity.HasIndex(r => r.ResponseStatusCode);
+            entity.HasIndex(r => r.Method);
         });
     }
 }

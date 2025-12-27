@@ -13,6 +13,9 @@ using System.Text;
 using CommonArchitecture.Infrastructure.Services;
 using CommonArchitecture.Application.Behaviors;
 using MediatR;
+using Hangfire;
+using Hangfire.SqlServer;
+using Hangfire.Dashboard;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -47,6 +50,28 @@ builder.Services.AddHostedService<CommonArchitecture.API.Services.RefreshTokenCl
 
 // Register logging service
 builder.Services.AddScoped<ILoggingService, LoggingService>();
+
+// Register Notification Service
+builder.Services.AddScoped<INotificationService, NotificationService>();
+
+// Register Daily Good Morning Job
+builder.Services.AddScoped<CommonArchitecture.API.Services.DailyGoodMorningJob>();
+
+// Configure Hangfire
+builder.Services.AddHangfire(configuration => configuration
+    .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
+    .UseSimpleAssemblyNameTypeSerializer()
+    .UseRecommendedSerializerSettings()
+    .UseSqlServerStorage(builder.Configuration.GetConnectionString("DefaultConnection"), new SqlServerStorageOptions
+    {
+        CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+        SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+        QueuePollInterval = TimeSpan.Zero,
+        UseRecommendedIsolationLevel = true,
+        DisableGlobalLocks = true
+    }));
+
+builder.Services.AddHangfireServer();
 
 // Configure Rate Limiting
 builder.Services.AddRateLimiter(options =>
@@ -161,6 +186,34 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+// Configure Hangfire Dashboard (API only - for monitoring)
+// Note: In production, you may want to add authentication/authorization to this endpoint
+if (app.Environment.IsDevelopment())
+{
+    app.MapHangfireDashboard("/hangfire", new DashboardOptions
+    {
+        DashboardTitle = "Hangfire Dashboard - API",
+        Authorization = new[] { new CommonArchitecture.API.HangfireAuthorizationFilter() }
+    });
+}
+
+// Schedule recurring jobs
+var recurringJobManager = app.Services.GetRequiredService<IRecurringJobManager>();
+var logger = app.Services.GetRequiredService<ILogger<Program>>();
+
+// Schedule daily Good Morning message job at 8:00 AM UTC (adjust timezone as needed)
+// Note: Hangfire will resolve DailyGoodMorningJob from DI when the job runs
+recurringJobManager.AddOrUpdate<CommonArchitecture.API.Services.DailyGoodMorningJob>(
+    "daily-good-morning-messages",
+    job => job.SendDailyGoodMorningMessagesAsync(),
+    Cron.Daily(hour: 8, minute: 0),
+    new RecurringJobOptions
+    {
+        TimeZone = TimeZoneInfo.Utc
+    });
+
+logger.LogInformation("Hangfire recurring job 'daily-good-morning-messages' scheduled for daily 8:00 AM UTC");
+
 var summaries = new[]
 {
     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
@@ -186,3 +239,5 @@ record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
 {
     public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
 }
+
+public partial class Program { }
